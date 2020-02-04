@@ -5,6 +5,7 @@ const massive = require('massive');
 const app = express();
 
 const authCtrl = require('./controllers/authController');
+const auth = require('./middleware/authMiddleware');
 
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING } = process.env;
 massive(CONNECTION_STRING).then(db => {
