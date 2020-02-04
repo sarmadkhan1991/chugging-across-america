@@ -4,8 +4,6 @@ import './Breweries.css';
 import { addBreweriesToTrip } from '../../Redux/tripReducer';
 import { connect } from 'react-redux'
 
-const key = 'b9dee4aad43d3349c92d6399586f8c69';
-const baseUrl = 'https://sandbox-api.brewerydb.com/v2/'
 
 class Breweries extends Component {
     constructor(props) {
@@ -17,7 +15,8 @@ class Breweries extends Component {
     }
 
     componentDidMount () {
-        axios.get('https://sandbox-api.brewerydb.com/v2/breweries/?key=b9dee4aad43d3349c92d6399586f8c69&withLocations=y').then(res => {
+        const key = process.env.REACT_APP_BREWERIES_API_KEY;
+        axios.get(`https://sandbox-api.brewerydb.com/v2/breweries/?key=${key}&withLocations=y`).then(res => {
             this.setState({
                 breweries: res.data.data
             })
@@ -27,7 +26,6 @@ class Breweries extends Component {
     render () {
         const { breweries } = this.state;
         const mappedBreweries = breweries.map(brew => {
-            console.log(brew)
             const placeHolder = 'https://cdn3.iconfinder.com/data/icons/design-n-code/100/272127c4-8d19-4bd3-bd22-2b75ce94ccb4-512.png';
             return (
                 <div key={brew.id}>
