@@ -7,10 +7,10 @@ const app = express();
 const authCtrl = require('./controllers/authController');
 
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING } = process.env;
-// massive(CONNECTION_STRING).then(db => {
-//     app.set('db', db);
-//     console.log('db connected');
-// });
+massive(CONNECTION_STRING).then(db => {
+    app.set('db', db);
+    console.log('db connected');
+});
 
 app.use(express.json());
 app.use(
