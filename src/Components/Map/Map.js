@@ -56,7 +56,7 @@ function Map() {
   };
   const size = {
     width: 375,
-    height: 300
+    height: 400
   };
   const {center, zoom} = fitBounds(bounds, size);
 
@@ -74,14 +74,29 @@ function Map() {
 
   // Display google map.
   return (
-    <div style={{ height: '300px', width: '375px' }}>
+    <div style={{ height: '400px', width: '375px' }}>
       <GoogleMap
-        bootstrapURLKeys={{ key: 'AIzaSyAHB8q6Sssq0AKIQt-pUVS7JuGEapNnSek' }}
+        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
         defaultCenter={center}
         defaultZoom={zoom}
         onClick={data => {
           console.log(data)
         }}
+        options={
+          {
+            styles: [
+              {
+                "featureType": "administrative.neighborhood",
+                "elementType": "labels.text",
+                "stylers": [
+                  {
+                    "visibility": "off"
+                  }
+                ]
+              }
+            ] 
+          }
+        }
       >
         {mappedLocations}
       </GoogleMap>
