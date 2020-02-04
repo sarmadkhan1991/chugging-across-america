@@ -9,7 +9,7 @@ class Header extends Component {
         username: "",
         password: ""
     };
-    this.handleusernameInput = this.handleusernameInput.bind(this);
+    this.handleUsernameInput = this.handleUsernameInput.bind(this);
     this.handlePasswordInput = this.handlePasswordInput.bind(this);
     this.updateUser = this.updateUser.bind(this);
     this.register = this.register.bind(this);
@@ -17,7 +17,7 @@ class Header extends Component {
     this.logout = this.logout.bind(this);
     }
 
-    handleusernameInput(value) {
+    handleUsernameInput(value) {
     this.setState( { 
         username: value
     });
@@ -74,14 +74,17 @@ class Header extends Component {
     const { user, username, password } = this.state;
         return (
             <div>
-                <header>
-                    <div>
-                        Chugging Across America
-                    </div>
-                    <div>
-                        Register | Login
-                    </div>
-                </header>
+                <div>
+                    <input type="text" placeholder="Enter username" value={username} onChange={e => handleUsernameInputFn(e.target.value)}></input>
+                </div>
+                <div>
+                    <input type="password" placeholder="Enter password" value={password} onChange={e => handlePasswordInputFn(e.target.value)}></input>
+                </div>
+                <div>
+                    <button onClick={login}>
+                        Login
+                    </button>
+                </div>
             </div>
         );
     }
