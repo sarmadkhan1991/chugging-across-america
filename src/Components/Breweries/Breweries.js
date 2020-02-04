@@ -39,7 +39,7 @@ class Breweries extends Component {
         })
         return (
             <div>
-                breweries:
+                <h1>breweries:</h1>
                 {mappedBreweries}
             </div>
         )
