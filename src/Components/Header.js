@@ -75,14 +75,17 @@ class Header extends Component {
         return (
             <div>
                 <div>
-                    <input type="text" placeholder="Enter username" value={username} onChange={e => handleUsernameInputFn(e.target.value)}></input>
+                    <input type="text" placeholder="Enter username" value={username} onChange={e => this.handleUsernameInput(e.target.value)}></input>
                 </div>
                 <div>
-                    <input type="password" placeholder="Enter password" value={password} onChange={e => handlePasswordInputFn(e.target.value)}></input>
+                    <input type="password" placeholder="Enter password" value={password} onChange={e => this.handlePasswordInput(e.target.value)}></input>
                 </div>
                 <div>
                     <button onClick={this.login}>
                         Login
+                    </button>
+                    <button onClick={this.register}>
+                        Register
                     </button>
                 </div>
             </div>
