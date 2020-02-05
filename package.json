@@ -2,6 +2,7 @@
   "name": "chugging-across-america",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:4000",
   "main": "server/server.js",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",

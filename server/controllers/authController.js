@@ -15,7 +15,7 @@ module.exports = {
         const user = registeredUser[0];
         req.session.user = {
             id: user.id,
-            username: user.username
+            // username: user.username
         };
         return res.status(200).send(req.session.user)
     },
