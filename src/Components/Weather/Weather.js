@@ -2,8 +2,7 @@ import React from "react";
 import axios from "axios";
 
 
-const API_KEY = "8d3bd4a4aa41cc3d806246713a353476"
-const API = "http://api.openweathermap.org/data/2.5/weather?"
+
 class Weather extends React.Component {
     constructor(props) {
         super(props);
