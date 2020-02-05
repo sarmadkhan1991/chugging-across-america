@@ -10,5 +10,6 @@ export default (
         {/* <Route component={your component} path='your component path' /> */}
         <Route component={Map} path='/map' />
         <Route component={CreateTrip} path='/create' />
+        
     </Switch>
 )
