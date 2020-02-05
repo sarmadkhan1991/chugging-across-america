@@ -1,16 +1,32 @@
+
+//initial state
 const initialState = {
     trip: null
 }
 
+
+//constants
 const ADD_BREWERIES = 'ADD_BREWERIES';
 
-export function addBreweriesToTrip (breweries){
+
+
+
+//action creator
+export function addBreweriesToTrip (breweries) {
     return {
         type: ADD_BREWERIES,
         payload: breweries
     }
 }
 
+
+
+
+
+
+
+
+//reducer
 export default function reducer (state = initialState, action) {
     switch (action.type) {
         case ADD_BREWERIES:

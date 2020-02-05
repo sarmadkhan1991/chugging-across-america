@@ -3,6 +3,8 @@ import { Switch, Route } from 'react-router-dom';
 import Breweries from './Components/Breweries/Breweries';
 import Map from './Components/Map/Map';
 import CreateTrip from './Components/CreateTrip/CreateTrip';
+import Trip from './Components/Trip/Trip'
+
 
 export default (
     // add routes in this switch.
@@ -12,5 +14,6 @@ export default (
         <Route path='/breweries' component={Breweries} />
         <Route component={Map} path='/map' />
         <Route component={CreateTrip} path='/create' />
+        <Route component={Trip} path='/trip'/>
     </Switch>
 )
