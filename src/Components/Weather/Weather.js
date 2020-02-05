@@ -8,7 +8,8 @@ class Weather extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            report: []
+            report: [],
+            city: ""
         }
         this.getWeather = this.getWeather.bind(this);
         this.calcFahrenheit = this.calcFahrenheit.bind(this);
@@ -19,10 +20,11 @@ class Weather extends React.Component {
     }
 
     getWeather() {
-        axios.get("http://api.openweathermap.org/data/2.5/weather?appid=8d3bd4a4aa41cc3d806246713a353476&q=Minnesota,us").then(res => {
+        axios.get("http://api.openweathermap.org/data/2.5/forecast?q=California,us&mode=JSON&appid=8d3bd4a4aa41cc3d806246713a353476").then(res => {
             const weatherReport = res.data;
             this.setState({
-                report: weatherReport
+                report: weatherReport.list,
+                city: weatherReport.city.name
             }); 
             
             
@@ -32,30 +34,40 @@ class Weather extends React.Component {
     calcFahrenheit(temp) {
       return (temp - 273.15) * 9/5 + 32
     }
+    getDayOfWeek(date) {
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const day = new Date("2020-02-05");
+        const dayOf = days[day.getDay(date)];
+        return dayOf
+    }
 
     render() {
+        const { report, city } = this.state;
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const day = new Date("2020-02-05");
+        const dayOf = days[day.getDay()];
+        console.log(this.getDayOfWeek("2020-02-05"))
        
-        
-        const { report } = this.state;
-        
-       if(report.main) {
-        console.log(report.name)
-        console.log(report.main.temp)
-        console.log(report.main.temp_min)
-        console.log(report.main.temp_max)
-        console.log(report.weather[0].main)
-        console.log(report.weather[0].description)
-       }
+          let regex = /12:00:00/
+          const mappedDays = report.filter(today => today.dt_txt.match(regex));
+          console.log(mappedDays);
+          const mappedReports = mappedDays.map(r => {
+            console.log(r)
+            return (
+                <div>
+
+                </div>
+            )
+          })
+      
+      
+       
         return (
             <div>
-   {report.main && 
-        <div>
-                <div>{report.name}</div>
-                <span>{report.main.temp_min}, {report.main.temp_max}</span>
-                <div>{report.weather[0].main}</div>
-        </div>
-   
-   }
+  
+                <div>{city}</div>
+                <div></div>
+        
             </div>
         )
     }
