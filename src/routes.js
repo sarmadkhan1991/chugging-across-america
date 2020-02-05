@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Map from './Components/Map/Map';
-import Home from './Components/Home/Home';
+import Home from './Components/CreateTrip/CreateTrip';
 
 export default (
     // add routes in this switch.
@@ -9,6 +9,6 @@ export default (
     <Switch>
         {/* <Route component={your component} path='your component path' /> */}
         <Route component={Map} path='/map' />
-        <Route component={Home} path='/home' />
+        <Route component={CreateTrip} path='/create' />
     </Switch>
 )

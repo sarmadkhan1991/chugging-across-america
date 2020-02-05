@@ -3,10 +3,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // CSS
-import './Home.css'
+import './CreateTrip.css'
 
-// Declare Home component as a class.
-class Home extends React.Component {
+// Declare CreateTrip component as a class.
+class CreateTrip extends React.Component {
   // Use constructor for initial state.
   constructor() {
     super();
@@ -62,4 +62,4 @@ const mapDispatchToProps = {
 
 }
 
-export default connect(mapReduxStateToProps, mapDispatchToProps)(Home);
+export default connect(mapReduxStateToProps, mapDispatchToProps)(CreateTrip);
