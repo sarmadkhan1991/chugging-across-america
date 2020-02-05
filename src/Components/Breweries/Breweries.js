@@ -24,21 +24,28 @@ class Breweries extends Component {
     }
 
     render () {
+        const city = 'Saint Louis';
         const { breweries } = this.state;
-        const mappedBreweries = breweries.map(brew => {
-            const placeHolder = 'https://cdn3.iconfinder.com/data/icons/design-n-code/100/272127c4-8d19-4bd3-bd22-2b75ce94ccb4-512.png';
-            return (
-                <div key={brew.id}>
-                    <img src={brew.images ? brew.images.icon : placeHolder} alt='brewery icon' />
-                    <h2>name: {brew.name}</h2>
-                    <h3>website: <a href={brew.website} target='_blank'>{brew.name}</a></h3>
-                </div>
-            )
+        const filteredBreweries = breweries.filter(brew => {
+            return brew.loctions.filter(location => {
+                return location.locality === city ? 
+            })
         })
+        // const mappedBreweries = breweries.map(brew => {
+        //     console.log(brew);
+        //     const placeHolder = 'https://cdn3.iconfinder.com/data/icons/design-n-code/100/272127c4-8d19-4bd3-bd22-2b75ce94ccb4-512.png';
+        //     return (
+        //         <div key={brew.id}>
+        //             <img src={brew.images ? brew.images.icon : placeHolder} alt='brewery icon' />
+        //             <h2>name: {brew.name}</h2>
+        //             <h3>website: <a href={brew.website} target='_blank'>{brew.name}</a></h3>
+        //         </div>
+        //     )
+        // })
         return (
             <div>
                 <h1>breweries:</h1>
-                {mappedBreweries}
+                {/* {mappedBreweries} */}
             </div>
         )
     }
