@@ -81,7 +81,7 @@ class Header extends Component {
                     <input type="password" placeholder="Enter password" value={password} onChange={e => handlePasswordInputFn(e.target.value)}></input>
                 </div>
                 <div>
-                    <button onClick={login}>
+                    <button onClick={this.login}>
                         Login
                     </button>
                 </div>
