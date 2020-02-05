@@ -26,6 +26,6 @@ app.post('/api/auth/register', authCtrl.register);
 app.post('/api/auth/login', authCtrl.login);
 app.post('/api/auth/logout', authCtrl.logout);
 app.get('/user/trips', tripCtrl.getTrips);
-app.post('/user/trip', tripCtrl.saveTrip);
+app.post('/user/trip', tripCtrl.addTrip);
 app.delete('/user/trip/:id', tripCtrl.deleteTrip);
 app.listen(SERVER_PORT, () => console.log(`Server listening on port ${SERVER_PORT}...`));

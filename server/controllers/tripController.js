@@ -2,14 +2,18 @@
 
 module.exports = {
     getTrips: async (req, res, next) => {
-        const { user_id } =  req.session
+        const { id } =  req.session
         const db = req.app.get("db");
-        const trips = await db.get_trips(user_id);
+        const trips = await db.get_trips(id);
         res.status(200).send(trips)
     },
 
-    saveTrip: async (req, res, next) => {
-        
+    addTrip: async (req, res, next) => {
+        const { id } = req.session
+        const { starting_city, starting_date, ending_city, ending_date } = req.body
+        const db = req.app.get('db');
+        const result = await db.add_trip(starting_city, starting_date, ending_city, ending_date, id);
+
     },
 
     deleteTrip: async (rea, res, next) => {
