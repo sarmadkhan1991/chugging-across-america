@@ -57,7 +57,6 @@ class Header extends Component {
     .post("api/auth/login", {username, password})
     .then(user => {
         this.updateUser(user.data);
-        this.props.setSessionData(user.data);
     }) 
     .catch(err => alert(err.response.request.response));
     }
@@ -74,20 +73,35 @@ class Header extends Component {
     const { user, username, password } = this.state;
         return (
             <div>
-                <div>
-                    <input type="text" placeholder="Enter username" value={username} onChange={e => this.handleUsernameInput(e.target.value)}></input>
-                </div>
-                <div>
-                    <input type="password" placeholder="Enter password" value={password} onChange={e => this.handlePasswordInput(e.target.value)}></input>
-                </div>
-                <div>
-                    <button onClick={this.login}>
-                        Login
-                    </button>
-                    <button onClick={this.register}>
-                        Register
-                    </button>
-                </div>
+                {user.username ?
+                    (
+                        <div>
+                            Welcome, {user.username} | 
+                            <button onClick={this.logout}>
+                                Logout
+                            </button>
+                        </div>
+                        
+                    ):
+                    (
+                        <div>
+                            <div>
+                                <input type="text" placeholder="Enter username" value={username} onChange={e => this.handleUsernameInput(e.target.value)}></input>
+                            </div>
+                            <div>
+                                <input type="password" placeholder="Enter password" value={password} onChange={e => this.handlePasswordInput(e.target.value)}></input>
+                            </div>
+                            <div>
+                                <button onClick={this.login}>
+                                    Login
+                                </button>
+                                <button onClick={this.register}>
+                                    Register
+                                </button>
+                            </div>
+                        </div>
+                    )
+                }
             </div>
         );
     }
