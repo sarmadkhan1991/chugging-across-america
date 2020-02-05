@@ -20,7 +20,8 @@ class Weather extends React.Component {
     }
 
     getWeather() {
-        axios.get("http://api.openweathermap.org/data/2.5/forecast?q=California,us&mode=JSON&appid=8d3bd4a4aa41cc3d806246713a353476").then(res => {
+        const key = process.env.REACT_APP_WEATHER_KEY;
+        axios.get(`http://api.openweathermap.org/data/2.5/forecast?q=California,us&mode=JSON&appid=${key}`).then(res => {
             const weatherReport = res.data;
             this.setState({
                 report: weatherReport.list,
@@ -32,29 +33,34 @@ class Weather extends React.Component {
     }
 
     calcFahrenheit(temp) {
-      return (temp - 273.15) * 9/5 + 32
+      return Math.floor((temp - 273.15) * 9/5 + 32)
     }
     getDayOfWeek(date) {
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        const day = new Date("2020-02-05");
+        const day = new Date(date);
         const dayOf = days[day.getDay(date)];
         return dayOf
     }
 
     render() {
         const { report, city } = this.state;
-        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        const day = new Date("2020-02-05");
-        const dayOf = days[day.getDay()];
-        console.log(this.getDayOfWeek("2020-02-05"))
+        
        
           let regex = /12:00:00/
           const mappedDays = report.filter(today => today.dt_txt.match(regex));
           console.log(mappedDays);
-          const mappedReports = mappedDays.map(r => {
-            console.log(r)
+          const mappedReports = mappedDays.map((r, index) => {
+            console.log(this.getDayOfWeek(r.dt_txt))
             return (
-                <div>
+                <div key={index}>
+                    <div>{this.getDayOfWeek(r.dt_txt)}</div>
+                    <div>{this.calcFahrenheit(r.main.temp)}</div>
+                    <div><img src={`http://openweathermap.org/img/wn/${r.weather[0].icon}.png`} alt="forecast"/>
+                    <p>{r.weather[0].description}</p>
+                    </div>
+                    
+                    <span>Min:{this.calcFahrenheit(r.main.temp_min)}, Max:{this.calcFahrenheit(r.main.temp_max)}</span>
+
 
                 </div>
             )
@@ -66,7 +72,7 @@ class Weather extends React.Component {
             <div>
   
                 <div>{city}</div>
-                <div></div>
+                <div>{mappedReports}</div>
         
             </div>
         )
