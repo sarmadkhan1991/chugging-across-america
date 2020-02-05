@@ -3,7 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const massive = require('massive');
 const app = express();
-
+const tripCtrl = require('./controllers/tripController');
 const authCtrl = require('./controllers/authController');
 const auth = require('./middleware/authMiddleware');
 
@@ -25,5 +25,9 @@ app.use(
 app.post('/api/auth/register', authCtrl.register);
 app.post('/api/auth/login', authCtrl.login);
 app.post('/api/auth/logout', authCtrl.logout);
+
+app.get('/user/trips', auth.usersOnly, tripCtrl.getTrips);
+app.post('/user/trip', auth.usersOnly, tripCtrl.addTrip);
+app.delete('/user/trip/:id', tripCtrl.deleteTrip);
 
 app.listen(SERVER_PORT, () => console.log(`Server listening on port ${SERVER_PORT}...`));
