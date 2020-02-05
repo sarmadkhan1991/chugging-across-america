@@ -26,11 +26,11 @@ class Breweries extends Component {
     render () {
         const city = 'Saint Louis';
         const { breweries } = this.state;
-        const filteredBreweries = breweries.filter(brew => {
-            return brew.loctions.filter(location => {
-                return location.locality === city ? 
-            })
-        })
+        // const filteredBreweries = breweries.filter(brew => {
+        //     return brew.loctions.filter(location => {
+        //         return location.locality === city ? 
+        //     })
+        // })
         // const mappedBreweries = breweries.map(brew => {
         //     console.log(brew);
         //     const placeHolder = 'https://cdn3.iconfinder.com/data/icons/design-n-code/100/272127c4-8d19-4bd3-bd22-2b75ce94ccb4-512.png';
