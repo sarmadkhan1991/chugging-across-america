@@ -63,29 +63,31 @@ class CreateTrip extends React.Component {
 
     return (
       <div>
-        <h2>Enter two cities to begin:</h2>
-        <form
-          onSubmit={e => {
-            e.preventDefault();
-            this.submitHandler();
-          }}
-        >
-          <input
-            type="text"
-            required
-            name="startCity"
-            placeholder="Start"
-            onChange={e => this.changeHandler(e.target.name, e.target.value)}
-          />
-          <input
-            type="text"
-            required
-            name="endCity"
-            placeholder="End"
-            onChange={e => this.changeHandler(e.target.name, e.target.value)}
-          />
-          <button type="submit">Find Beer</button>
-        </form>
+        <main>
+          <h2>Enter two cities to begin:</h2>
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+              this.submitHandler();
+            }}
+          >
+            <input
+              type="text"
+              required
+              name="startCity"
+              placeholder="Start"
+              onChange={e => this.changeHandler(e.target.name, e.target.value)}
+            />
+            <input
+              type="text"
+              required
+              name="endCity"
+              placeholder="End"
+              onChange={e => this.changeHandler(e.target.name, e.target.value)}
+            />
+            <button type="submit">Find Beer</button>
+          </form>
+        </main>
       </div>
     );
   }
