@@ -11,11 +11,12 @@ import './Map.css';
 const Marker = ({ text }) => {
   return (
   <div
-    className="test-text"
+    className="marker"
     onClick={() => {
-      alert(text)
+      alert("Put info here.")
     }}
   >
+    <img src="../../../media/beer_wheels.png" alt="brewery location" />
   </div>
 )}
 
