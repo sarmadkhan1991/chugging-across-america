@@ -4,6 +4,7 @@ import Map from './Components/Map/Map';
 import CreateTrip from './Components/CreateTrip/CreateTrip';
 import Trip from './Components/Trip/Trip';
 import Home from './Components/Home/Home';
+import SavedTrips from "./Components/SavedTrips/SavedTrips";
 
 
 export default (
@@ -15,5 +16,6 @@ export default (
         <Route component={Map} path='/map' />
         <Route component={CreateTrip} path='/create' />
         <Route component={Trip} path='/trip'/>
+        <Route component={SavedTrips} path='/user/trips'/>
     </Switch>
 )

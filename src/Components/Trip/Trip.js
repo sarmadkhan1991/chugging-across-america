@@ -9,6 +9,9 @@ export default function Trip() {
             <div>
                 <Map/>
                 <Weather/>
+                {/* {user.session ? <button>Save Trip</button> 
+                : null
+                } */}
             </div>
         )
     
