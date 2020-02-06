@@ -13,7 +13,7 @@ const beer = require('./beer_wheels.png')
 const BrewMarker = ({ text }) => {
   return (
   <div
-    className="marker"
+    className="brew-marker"
     onClick={() => {
       alert("Put info here.")
     }}
@@ -22,15 +22,14 @@ const BrewMarker = ({ text }) => {
   </div>
 )}
 
-const CityMarker = ({ text }) => {
+const CityMarker = () => {
   return (
     <div
-    className="marker"
+    className="city-marker"
     onClick={() => {
       alert("Put info here.")
     }}
   >
-    {text}
   </div>
   )
 }

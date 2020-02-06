@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { addCitiesToTrip } from '../../Redux/tripReducer';
+import { Redirect } from 'react-router-dom';
 
 // CSS
 import './CreateTrip.css'
@@ -14,7 +15,8 @@ class CreateTrip extends React.Component {
     super(props);
     this.state = {
       startCity: "",
-      endCity: ""
+      endCity: "",
+      redirect: false
     }
   }
 
@@ -49,10 +51,16 @@ class CreateTrip extends React.Component {
       .catch(e => console.log(e));
 
     this.props.addCitiesToTrip(cities);
-    this.props.history.push('/trip');
+    this.setState({
+      redirect: true
+    })
   }
-
+  
   render() {
+    if(this.state.redirect) {
+      return <Redirect to='/trip' />
+    }
+
     return (
       <div>
         <h2>Enter two cities to begin:</h2>
