@@ -1,6 +1,9 @@
 // Dependencies
 import React from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
+import { addCitiesToTrip } from '../../Redux/tripReducer';
+import { Link } from 'react-router-dom'
 
 // CSS
 import './CreateTrip.css'
@@ -8,8 +11,8 @@ import './CreateTrip.css'
 // Declare CreateTrip component as a class.
 class CreateTrip extends React.Component {
   // Use constructor for initial state.
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       startCity: "",
       endCity: ""
@@ -23,14 +26,41 @@ class CreateTrip extends React.Component {
     });
   }
 
+  submitHandler = async () => {
+    let cities = [];
+    await axios
+      .get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.startCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
+      .then(res => {
+        cities.push({
+          name: res.data.results[0].address_components[0].long_name,
+          lat: res.data.results[0].geometry.location.lat,
+          lng: res.data.results[0].geometry.location.lng
+        });
+      })
+      .catch(e => console.log(e));
+    await axios
+      .get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.endCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
+      .then(res => {
+        cities.push({
+          name: res.data.results[0].address_components[0].long_name,
+          lat: res.data.results[0].geometry.location.lat,
+          lng: res.data.results[0].geometry.location.lng
+        });
+      })
+      .catch(e => console.log(e));
+
+    this.props.addCitiesToTrip(cities);
+    this.props.history.push('/breweries');
+  }
+
   render() {
     return (
       <div>
-        <h1>Welcome!</h1>
         <h2>Enter two cities to begin:</h2>
         <form
           onSubmit={e => {
             e.preventDefault();
+            this.submitHandler();
           }}
         >
           <input
@@ -47,7 +77,7 @@ class CreateTrip extends React.Component {
             placeholder="End"
             onChange={e => this.changeHandler(e.target.name, e.target.value)}
           />
-          <button>Find Beer</button>
+            <button type="submit">Find Beer</button>
         </form>
       </div>
     );
@@ -59,7 +89,7 @@ function mapReduxStateToProps(reduxState) {
 }
 
 const mapDispatchToProps = {
-
+  addCitiesToTrip
 }
 
 export default connect(mapReduxStateToProps, mapDispatchToProps)(CreateTrip);

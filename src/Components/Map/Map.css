@@ -1,13 +1,15 @@
-.test-text {
+.marker {
   font-size: 16px;
-  height: 20px;
-  width: 20px;
-  border: red solid 3px;
-  border-radius: 50%;
+  height: 50px;
+  width: 50px;
   position: absolute;
   transform: translate(-50%, -50%);
 }
 
-.test-text:hover {
+.marker img {
+  height: inherit;
+}
+
+.marker:hover {
   cursor: pointer;
 }

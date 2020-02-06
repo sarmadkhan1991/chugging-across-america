@@ -7,6 +7,7 @@ const initialState = {
 
 //constants
 const ADD_BREWERIES = 'ADD_BREWERIES';
+const ADD_CITIES = 'ADD_CITIES';
 
 
 
@@ -18,8 +19,13 @@ export function addBreweriesToTrip (breweries) {
         payload: breweries
     }
 }
-
-
+    
+export function addCitiesToTrip(cities) {
+    return {
+        type: ADD_CITIES,
+        payload: cities
+    }
+}
 
 
 
@@ -30,12 +36,14 @@ export function addBreweriesToTrip (breweries) {
 export default function reducer (state = initialState, action) {
     switch (action.type) {
         case ADD_BREWERIES:
-            const { id, latitude, longitude } = action.payload;
             return {
                 ...state,
-                breweryId: id,
-                breweryLatitude: latitude,
-                breweryLongitude: longitude
+                breweries: action.payload
+            }
+        case ADD_CITIES:
+            return {
+                ...state, 
+                cities: action.payload
             }
         default:
             return state;

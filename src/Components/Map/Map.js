@@ -7,25 +7,30 @@ import { connect } from 'react-redux';
 // CSS
 import './Map.css';
 
+const beer = require('./beer_wheels.png')
+
 // Define a marker component to display on the map.
 const Marker = ({ text }) => {
   return (
   <div
-    className="test-text"
+    className="marker"
     onClick={() => {
-      alert(text)
+      alert("Put info here.")
     }}
   >
+    <img src={beer} alt="brewery location" />
   </div>
 )}
 
 function Map(props) {
-
-  // Locations to pin on map. Will receive actual data from redux state.
-  var locations = [
-    {name: 'Home', lat: 33.6644717, lng: -112.2233},
-    {name: 'Test', lat: 33.665, lng: -112.243}
-  ];
+  // Locations to pin on map.
+  var locations = props.trip.cities;
+  if (!locations) {
+    locations = [
+      {name: "Default", lat: 30, lng: -112},
+      {name: "Default2", lat: 31, lng: -113}
+    ]
+  }
 
   // Initialize bounds to 0.
   var northBound = 0;

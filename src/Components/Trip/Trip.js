@@ -1,21 +1,19 @@
 import React from "react";
 import Weather from "../Weather/Weather"
+import Map from '../Map/Map';
 
-class Trip extends React.Component {
-    constructor() {
-        super()
-        this.state = {
 
-        }
-    }
-
-    render() {
+export default function Trip() {
+  
         return (
             <div>
+                <Map/>
                 <Weather/>
+                {/* {user.session ? <button>Save Trip</button> 
+                : null
+                } */}
             </div>
         )
-    }
+    
 }
 
-export default Trip;

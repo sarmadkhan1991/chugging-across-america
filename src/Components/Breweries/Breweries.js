@@ -11,65 +11,47 @@ class Breweries extends Component {
 
         this.state = {
             breweries: [],
-            locations: []
+            breweriesClean: []
         }
     }
 
     componentDidMount () {
         const key = process.env.REACT_APP_BREWERIES_API_KEY;
-        axios.get(`https://sandbox-api.brewerydb.com/v2/breweries/?key=${key}&withLocations=y`).then(res => {
-            const breweriesWithLocations = res.data.data.filter(brew => {
-                if (brew.locations){
+        const {lat, lng} = this.props.trip.trip.cities[1];
+        axios.get(`https://sandbox-api.brewerydb.com/v2/search/geo/point?lat=${lat}&lng=${lng}&key=${key}&raduis=100`).then(res => {
+            const breweries = res.data.data;
+            const breweriesOpenToPublic = breweries.filter(brew => {
+                if (brew.openToPublic === 'Y') {
                     return brew
                 }
+            });
+            this.setState({
+                breweries: breweriesOpenToPublic
             })
-            const breweriesWithoutLocations = breweriesWithLocations.map(brew => {
-                const {id, name, website, images} = brew
+            const breweryInfo = breweriesOpenToPublic.map(brew => {
+                const {id, breweryId, phone, website, hoursOfOperationExplicit, latitude, longitude} = brew;
                 const brewery = {
-                    id: id,
-                    name: name, 
+                    locId: id,
+                    breweryId: breweryId,
+                    name: brew.brewery.name,
+                    logo: brew.brewery.images.icon,
+                    phone: phone,
                     website: website,
-                    images: images
+                    hoursOfOperation: hoursOfOperationExplicit,
+                    lat: latitude,
+                    lng: longitude,
                 }
-                return brewery;
-            })
-            console.log(breweriesWithLocations);
-            const breweryLocations = breweriesWithLocations.map(brew => {
-                const locations = [];
-
+                return brewery
             })
             this.setState({
-                breweries: breweriesWithoutLocations
+                breweriesClean: breweryInfo
             })
+            this.props.addBreweriesToTrip(breweryInfo);
         })
     }
 
     render () {
-        //console.log(this.state)
-        // const city = 'Saint Louis';
-        // const { breweries } = this.state;
-        // const filteredBreweries = breweries.filter(brew => {
-        //     const {} = brew;
-        //     if (brew.locations) {
-        //         return brew.locations.filter(location => {
-        //             if (location.locality === city && location.openToPublic === 'Y'){
-        //                 return location
-        //             }
-        //         })
-        //     }
-        // });
-        // console.log(filteredBreweries);
-        // const mappedBreweries = breweries.map(brew => {
-        //     //console.log(brew);
-        //     const placeHolder = 'https://cdn3.iconfinder.com/data/icons/design-n-code/100/272127c4-8d19-4bd3-bd22-2b75ce94ccb4-512.png';
-        //     return (
-        //         <div key={brew.id}>
-        //             <img src={brew.images ? brew.images.icon : placeHolder} alt='brewery icon' />
-        //             <h2>name: {brew.name}</h2>
-        //             <h3>website: <a href={brew.website} target='_blank'>{brew.name}</a></h3>
-        //         </div>
-        //     )
-        // })
+        console.log(this.props.trip)
         return (
             <div>
                 <h1>breweries:</h1>
