@@ -1,4 +1,4 @@
-.test-text {
+.marker {
   font-size: 16px;
   height: 20px;
   width: 20px;
@@ -8,6 +8,6 @@
   transform: translate(-50%, -50%);
 }
 
-.test-text:hover {
+.marker:hover {
   cursor: pointer;
 }
