@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+import SavedTrips from './SavedTrips/SavedTrips'
+
 class Header extends Component {
     constructor() {
     super();
@@ -82,40 +84,40 @@ class Header extends Component {
     const { user, username, password } = this.state;
         return (
             <div>
-                <div>
-                    <h1>
+                <header>
+                   <h1>
                         Chugging Across America
                     </h1>
-                </div>
-                {user.username ?
-                    (
-                        <div>
-                            Welcome, {user.username} | 
-                            <button onClick={this.logout}>
-                                Logout
-                            </button>
-                        </div>
-                        
-                    ):
-                    (
-                        <div>
+                    {user.username ?
+                        (
                             <div>
-                                <input type="text" placeholder="Enter username" value={username} onChange={e => this.handleUsernameInput(e.target.value)}></input>
-                            </div>
-                            <div>
-                                <input type="password" placeholder="Enter password" value={password} onChange={e => this.handlePasswordInput(e.target.value)}></input>
-                            </div>
-                            <div>
-                                <button onClick={this.login}>
-                                    Login
+                                Welcome, {user.username} | 
+                                <button onClick={this.logout}>
+                                    Logout
                                 </button>
-                                <button onClick={this.register}>
-                                    Register
-                                </button>
+                                <SavedTrips />
                             </div>
-                        </div>
-                    )
-                }
+                        ):
+                        (
+                            <div className="login-container">
+                                <div>
+                                    <input type="text" placeholder="Enter username" value={username} onChange={e => this.handleUsernameInput(e.target.value)}></input>
+                                </div>
+                                <div>
+                                    <input type="password" placeholder="Enter password" value={password} onChange={e => this.handlePasswordInput(e.target.value)}></input>
+                                </div>
+                                <div>
+                                    <button onClick={this.login}>
+                                        Login
+                                    </button>
+                                    <button onClick={this.register}>
+                                        Register
+                                    </button>
+                                </div>
+                            </div>
+                        )
+                    }
+                </header>
             </div>
         );
     }
