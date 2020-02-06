@@ -9,6 +9,7 @@ class SavedTrips extends React.Component {
             savedTrips: []
         }
         this.getSavedTrips = this.getSavedTrips.bind(this);
+        this.getSession = this.getSession.bind(this);
     }
 
     componentDidMount() {
@@ -19,10 +20,11 @@ class SavedTrips extends React.Component {
         axios.get("/user/trips").then(res => {
             this.setState({
                 savedTrips: res.data
-            })
-        })
+            });
+        });
     }
 
+  
     render() {
         const { savedTrips } = this.state;
         const mappedTrips = savedTrips.map(trip => {
