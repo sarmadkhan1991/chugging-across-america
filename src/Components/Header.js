@@ -17,10 +17,19 @@ class Header extends Component {
     this.logout = this.logout.bind(this);
     }
 
+    componentDidMount() {
+        axios
+        .get('api/auth/userSession')
+        .then(res => {
+            this.setState( {
+                user: res.data
+            })
+        })
+    }
     handleUsernameInput(value) {
-    this.setState( { 
-        username: value
-    });
+        this.setState( { 
+            username: value
+        });
     }
     handlePasswordInput(value) {
         this.setState( {
