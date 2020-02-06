@@ -33,7 +33,6 @@ class CreateTrip extends React.Component {
   render() {
     return (
       <div>
-        <h1>Welcome!</h1>
         <h2>Enter two cities to begin:</h2>
         <form
           onSubmit={e => {
