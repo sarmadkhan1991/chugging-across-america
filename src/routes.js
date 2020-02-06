@@ -12,7 +12,7 @@ export default (
     // to add routed import your component and add path and component attribut to the route. See example below
     <Switch>
         {/* <Route component={your component} path='your component path' /> */}
-        <Route component={Home} path='/' />
+        <Route component={Home} exact path='/' />
         <Route component={Map} path='/map' />
         <Route component={CreateTrip} path='/create' />
         <Route component={Trip} path='/trip'/>
