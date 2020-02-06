@@ -10,29 +10,57 @@ class Breweries extends Component {
         super (props)
 
         this.state = {
-            breweries: []
+            breweries: [],
+            locations: []
         }
     }
 
     componentDidMount () {
         const key = process.env.REACT_APP_BREWERIES_API_KEY;
         axios.get(`https://sandbox-api.brewerydb.com/v2/breweries/?key=${key}&withLocations=y`).then(res => {
+            const breweriesWithLocations = res.data.data.filter(brew => {
+                if (brew.locations){
+                    return brew
+                }
+            })
+            const breweriesWithoutLocations = breweriesWithLocations.map(brew => {
+                const {id, name, website, images} = brew
+                const brewery = {
+                    id: id,
+                    name: name, 
+                    website: website,
+                    images: images
+                }
+                return brewery;
+            })
+            console.log(breweriesWithLocations);
+            const breweryLocations = breweriesWithLocations.map(brew => {
+                const locations = [];
+
+            })
             this.setState({
-                breweries: res.data.data
+                breweries: breweriesWithoutLocations
             })
         })
     }
 
     render () {
-        const city = 'Saint Louis';
-        const { breweries } = this.state;
+        //console.log(this.state)
+        // const city = 'Saint Louis';
+        // const { breweries } = this.state;
         // const filteredBreweries = breweries.filter(brew => {
-        //     return brew.loctions.filter(location => {
-        //         return location.locality === city ? 
-        //     })
-        // })
+        //     const {} = brew;
+        //     if (brew.locations) {
+        //         return brew.locations.filter(location => {
+        //             if (location.locality === city && location.openToPublic === 'Y'){
+        //                 return location
+        //             }
+        //         })
+        //     }
+        // });
+        // console.log(filteredBreweries);
         // const mappedBreweries = breweries.map(brew => {
-        //     console.log(brew);
+        //     //console.log(brew);
         //     const placeHolder = 'https://cdn3.iconfinder.com/data/icons/design-n-code/100/272127c4-8d19-4bd3-bd22-2b75ce94ccb4-512.png';
         //     return (
         //         <div key={brew.id}>
