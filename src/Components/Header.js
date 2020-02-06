@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-import SavedTrips from './SavedTrips/SavedTrips'
-
 class Header extends Component {
     constructor() {
     super();
@@ -95,7 +93,6 @@ class Header extends Component {
                                 <button onClick={this.logout}>
                                     Logout
                                 </button>
-                                <SavedTrips />
                             </div>
                         ):
                         (
