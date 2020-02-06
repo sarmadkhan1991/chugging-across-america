@@ -49,7 +49,7 @@ class CreateTrip extends React.Component {
       .catch(e => console.log(e));
 
     this.props.addCitiesToTrip(cities);
-    this.props.history.push('/map');
+    this.props.history.push('/trip');
   }
 
   render() {
