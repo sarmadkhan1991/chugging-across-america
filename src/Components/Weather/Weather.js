@@ -43,7 +43,7 @@ class Weather extends React.Component {
 
     render() {
         const { report, city } = this.state;
-        
+       
        
           let regex = /12:00:00/
           const mappedDays = report.filter(today => today.dt_txt.match(regex));

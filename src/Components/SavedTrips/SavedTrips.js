@@ -4,12 +4,15 @@ import React from "react";
 class SavedTrips extends React.Component {
     constructor() {
         super();
-        this.state = {
-            savedTrips: []
-        }
     }
 
     render() {
+        const { savedTrips } = this.props;
+        const mappedTrips = savedTrips.map(trip => {
+            returnn (
+                <div></div>
+            )
+        })
         return(
             <div>
                 
@@ -17,3 +20,11 @@ class SavedTrips extends React.Component {
         )
     }
 }
+const mapSateToProps = state => {
+    return {
+        savedTrips: state.savedTrips
+    }
+}
+
+
+export default connect(mapStateToProps)(SavedTrips)
