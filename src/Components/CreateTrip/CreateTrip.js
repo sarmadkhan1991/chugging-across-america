@@ -1,6 +1,7 @@
 // Dependencies
 import React from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { addCitiesToTrip } from '../../Redux/tripReducer';
 
 // CSS
@@ -24,10 +25,31 @@ class CreateTrip extends React.Component {
     });
   }
 
-  submitHandler = () => {
+  submitHandler = async () => {
     let cities = [];
-    cities.push(this.state.startCity, this.state.endCity);
+    await axios
+      .get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.startCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
+      .then(res => {
+        cities.push({
+          name: res.data.results[0].address_components[0].long_name,
+          lat: res.data.results[0].geometry.location.lat,
+          lng: res.data.results[0].geometry.location.lng
+        });
+      })
+      .catch(e => console.log(e));
+    await axios
+      .get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.endCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
+      .then(res => {
+        cities.push({
+          name: res.data.results[0].address_components[0].long_name,
+          lat: res.data.results[0].geometry.location.lat,
+          lng: res.data.results[0].geometry.location.lng
+        });
+      })
+      .catch(e => console.log(e));
+
     this.props.addCitiesToTrip(cities);
+    this.props.history.push('/map');
   }
 
   render() {
