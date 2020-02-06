@@ -1,30 +1,44 @@
 import React from "react";
+import axios from "axios";
 
 
 class SavedTrips extends React.Component {
     constructor() {
         super();
+        this.state = {
+            savedTrips: []
+        }
+        this.getSavedTrips = this.getSavedTrips.bind(this);
+    }
+
+    componentDidMount() {
+        this.getSavedTrips()
+    }
+
+    getSavedTrips() {
+        axios.get("/user/trips").then(res => {
+            this.setState({
+                savedTrips: res.data
+            })
+        })
     }
 
     render() {
-        const { savedTrips } = this.props;
+        const { savedTrips } = this.state;
         const mappedTrips = savedTrips.map(trip => {
-            returnn (
-                <div></div>
+            return (
+                <div>
+                    TRIPS
+                </div>
             )
         })
         return(
             <div>
-                
+                {mappedTrips}
             </div>
         )
     }
 }
-const mapSateToProps = state => {
-    return {
-        savedTrips: state.savedTrips
-    }
-}
 
 
-export default connect(mapStateToProps)(SavedTrips)
+export default SavedTrips;
