@@ -82,6 +82,11 @@ class Header extends Component {
     const { user, username, password } = this.state;
         return (
             <div>
+                <div>
+                    <h1>
+                        Chugging Across America
+                    </h1>
+                </div>
                 {user.username ?
                     (
                         <div>
