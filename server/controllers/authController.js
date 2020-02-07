@@ -42,5 +42,14 @@ module.exports = {
     logout: (req, res, next) => {
         req.session.destroy();
         res.status(200).send("You have been logged out.");
+    },
+    updatePassword: async (req, res, next) => {
+        const { password } = req.body;
+        const { id } = req.session.user;
+        const db = req.app.get('db');
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(password, salt);
+        await db.update_password(hash, id);
+        return res.status(200).send("Your password has been reset.")
     }
 };
