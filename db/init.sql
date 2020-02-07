@@ -22,6 +22,7 @@ CREATE TABLE trips
     user_id INTEGER REFERENCES users(id)
 );
 
+-- Dummy trip data
 INSERT INTO trips
 (starting_city, starting_date, ending_city, ending_date, user_id) 
 VALUES
@@ -31,4 +32,19 @@ VALUES
 'San Diego',
 '2020-03-01',
 1
+);
+
+CREATE TABLE stops
+(
+    id SERIAL PRIMARY KEY,
+    city VARCHAR(40) NOT NULL,
+    trip_id INTEGER REFERENCES trips(id)
+);
+
+CREATE TABLE ratings
+(
+    id SERIAL PRIMARY KEY,
+    brewery_id VARCHAR(40) NOT NULL,
+    rating INTEGER NOT NULL,
+    user_id INTEGER REFERENCES users(id)
 );
