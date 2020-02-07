@@ -1,4 +1,3 @@
-
 //initial state
 const initialState = {
     trip: null
@@ -6,12 +5,20 @@ const initialState = {
 
 
 //constants
+const ADD_BREWERIES = 'ADD_BREWERIES';
 const ADD_CITIES = 'ADD_CITIES';
-
+const GET_CURRENT_BREWERY = 'GET_CURRENT_BREWERY';
 
 
 
 //action creator
+export function addBreweriesToTrip (breweries) {
+    return {
+        type: ADD_BREWERIES,
+        payload: breweries
+    };
+};
+    
 export function addCitiesToTrip(cities) {
     return {
         type: ADD_CITIES,
@@ -19,7 +26,12 @@ export function addCitiesToTrip(cities) {
     }
 }
 
-
+export function getBrewery(brewery) {
+    return {
+        type: GET_CURRENT_BREWERY,
+        payload: brewery
+    }
+}
 
 
 
@@ -29,10 +41,20 @@ export function addCitiesToTrip(cities) {
 //reducer
 export default function reducer (state = initialState, action) {
     switch (action.type) {
+        case ADD_BREWERIES:
+            return {
+                ...state,
+                breweries: action.payload
+            }
         case ADD_CITIES:
             return {
                 ...state, 
                 cities: action.payload
+            }
+        case GET_CURRENT_BREWERY:
+            return {
+                ...state,
+                currentBrewery: action.payload
             }
         default:
             return state;

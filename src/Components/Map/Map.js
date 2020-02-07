@@ -36,7 +36,7 @@ const CityMarker = () => {
 
 function Map(props) {
   // Locations to pin on map.
-  var cityLocations = props.trip.cities;
+  var cityLocations = props.cities;
 
   var center, zoom, mappedCities;
 
@@ -131,4 +131,4 @@ function mapReduxStateToProps(reduxState) {
   return reduxState;
 }
 
-export default connect(mapReduxStateToProps)(Map);
+export default connect(mapReduxStateToProps, null) (Map);
