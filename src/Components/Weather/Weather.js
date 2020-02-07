@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { connect } from "react-redux";
 
 
 
@@ -79,6 +80,12 @@ class Weather extends React.Component {
 
 }
 
+const mapStateToProps = state => {
+    return {
+        city: state.trip.city[0]
+    }
+}
 
 
-export default Weather;
+
+export default connect(mapStateToProps)(Weather);
