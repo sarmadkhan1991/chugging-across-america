@@ -1,38 +1,29 @@
-.App {
-  text-align: center;
+body {
+  background-color: #221e11;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+header {
+  height: 100px;
+  width: 100vw;
+  box-sizing: border-box;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
+  background-color: #000;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 2px;
+  padding: 10px;
+  margin: auto;
+  position: relative;
+  z-index: 3;
 }
-
-.App-link {
-  color: #61dafb;
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+main {
+  height: calc(100vh - 100px);
+  background-image: url("https://bloximages.newyork1.vip.townnews.com/gazette.com/content/tncms/assets/v3/editorial/5/f0/5f008438-6075-11e9-8ddd-c344ac5900f7/5cb61ec7e24bb.image.jpg?resize=1700%2C731");
+  background-repeat: no-repeat;
 }

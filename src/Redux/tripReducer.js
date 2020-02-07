@@ -1,5 +1,3 @@
-import axios from 'axios';
-import {} from 'redux-promise-middleware'
 //initial state
 const initialState = {
     trip: null
@@ -9,7 +7,7 @@ const initialState = {
 //constants
 const ADD_BREWERIES = 'ADD_BREWERIES';
 const ADD_CITIES = 'ADD_CITIES';
-
+const GET_CURRENT_BREWERY = 'GET_CURRENT_BREWERY';
 
 
 
@@ -25,6 +23,13 @@ export function addCitiesToTrip(cities) {
     return {
         type: ADD_CITIES,
         payload: cities
+    }
+}
+
+export function getBrewery(brewery) {
+    return {
+        type: GET_CURRENT_BREWERY,
+        payload: brewery
     }
 }
 
@@ -45,6 +50,11 @@ export default function reducer (state = initialState, action) {
             return {
                 ...state, 
                 cities: action.payload
+            }
+        case GET_CURRENT_BREWERY:
+            return {
+                ...state,
+                currentBrewery: action.payload
             }
         default:
             return state;

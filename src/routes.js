@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Breweries from './Components/Breweries/Breweries';
+import Brewery from './Components/Brewery/Brewery';
 import Map from './Components/Map/Map';
 import CreateTrip from './Components/CreateTrip/CreateTrip';
 import Trip from './Components/Trip/Trip';
@@ -14,7 +14,7 @@ export default (
     <Switch>
         {/* <Route component={your component} path='your component path' /> */}
         <Route component={Home} exact path='/' />
-        <Route path='/breweries' component={Breweries} />
+        <Route path='/brewery' component={Brewery} />
         <Route component={Map} path='/map' />
         <Route component={CreateTrip} path='/create' />
         <Route component={Trip} path='/trip'/>

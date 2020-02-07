@@ -2,7 +2,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { addCitiesToTrip } from '../../Redux/tripReducer';
+import { addCitiesToTrip, addBreweriesToTrip } from '../../Redux/tripReducer';
+import { Redirect } from 'react-router-dom';
 
 // CSS
 import './CreateTrip.css'
@@ -14,7 +15,8 @@ class CreateTrip extends React.Component {
     super(props);
     this.state = {
       startCity: "",
-      endCity: ""
+      endCity: "",
+      redirect: false
     }
   }
 
@@ -47,37 +49,78 @@ class CreateTrip extends React.Component {
         });
       })
       .catch(e => console.log(e));
+      
+      await axios.get(`https://sandbox-api.brewerydb.com/v2/search/geo/point?lat=${cities[1].lat}&lng=${cities[1].lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&raduis=100`)
+             .then(res => {
+            const breweries = res.data.data;
+            const breweriesOpenToPublic = breweries.filter(brew => {
+                if (brew.openToPublic === 'Y') {
+                    return brew
+                }
+            });
+            const breweryInfo = breweriesOpenToPublic.map(brew => {
+                const {id, breweryId, phone, website, hoursOfOperationExplicit, latitude, longitude, streetAddress, locality, region, postalCode} = brew;
+                const brewery = {
+                    locId: id,
+                    breweryId: breweryId,
+                    name: brew.brewery.name,
+                    address: {
+                      streetAddress: streetAddress,
+                      city: locality,
+                      state: region,
+                      zip: postalCode
+                    },
+                    logo: brew.brewery.images.icon,
+                    phone: phone,
+                    website: website,
+                    hoursOfOperation: hoursOfOperationExplicit,
+                    lat: latitude,
+                    lng: longitude,
+                }
+                return brewery
+            })
+            this.props.addBreweriesToTrip(breweryInfo);
+        })
+        .catch(e => console.log(e));
 
     this.props.addCitiesToTrip(cities);
-    this.props.history.push('/breweries');
+    this.setState({
+      redirect: true
+    })
   }
-
+  
   render() {
+    if(this.state.redirect) {
+      return <Redirect to='/trip' />
+    }
+
     return (
       <div>
-        <h2>Enter two cities to begin:</h2>
-        <form
-          onSubmit={e => {
-            e.preventDefault();
-            this.submitHandler();
-          }}
-        >
-          <input
-            type="text"
-            required
-            name="startCity"
-            placeholder="Start"
-            onChange={e => this.changeHandler(e.target.name, e.target.value)}
-          />
-          <input
-            type="text"
-            required
-            name="endCity"
-            placeholder="End"
-            onChange={e => this.changeHandler(e.target.name, e.target.value)}
-          />
+        <main>
+          <h2>Enter two cities to begin:</h2>
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+              this.submitHandler();
+            }}
+          >
+            <input
+              type="text"
+              required
+              name="startCity"
+              placeholder="Start"
+              onChange={e => this.changeHandler(e.target.name, e.target.value)}
+            />
+            <input
+              type="text"
+              required
+              name="endCity"
+              placeholder="End"
+              onChange={e => this.changeHandler(e.target.name, e.target.value)}
+            />
             <button type="submit">Find Beer</button>
-        </form>
+          </form>
+        </main>
       </div>
     );
   }
@@ -88,7 +131,8 @@ function mapReduxStateToProps(reduxState) {
 }
 
 const mapDispatchToProps = {
-  addCitiesToTrip
+  addCitiesToTrip,
+  addBreweriesToTrip
 }
 
 export default connect(mapReduxStateToProps, mapDispatchToProps)(CreateTrip);
