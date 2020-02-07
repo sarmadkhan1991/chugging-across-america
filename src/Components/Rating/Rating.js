@@ -19,11 +19,12 @@ class Rating extends React.Component {
     const { currentBrewery } = this.props;
     const ratings = axios.get(`/api/rating/${currentBrewery}`).catch(e => console.log(e));
     const mappedRatings = ratings.map((rating, index) => {
-      
+      console.log(rating, index)
     });
     return (
       <div>
         Rating
+        {mappedRatings}
       </div>
     );
   }
