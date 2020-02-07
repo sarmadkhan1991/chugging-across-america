@@ -90,7 +90,7 @@ function Map(props) {
     mappedBreweries = props.breweries.map((brewery) => {
       return (
         <BrewMarker
-          key={brewery.breweryId}
+          key={brewery.locId}
           lat={brewery.lat}
           lng={brewery.lng}
           text={brewery.name}
