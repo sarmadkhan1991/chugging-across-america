@@ -18,7 +18,9 @@ class Breweries extends Component {
     componentDidMount () {
         const key = process.env.REACT_APP_BREWERIES_API_KEY;
         const {lat, lng} = this.props.trip.trip.cities[1];
-        axios.get(`https://sandbox-api.brewerydb.com/v2/search/geo/point?lat=${lat}&lng=${lng}&key=${key}&raduis=100`).then(res => {
+        this.props.addBreweriesToTrip(lat, lng);
+        axios.get(`https://sandbox-api.brewerydb.com/v2/search/geo/point?lat=${lat}&lng=${lng}&key=${key}&raduis=100`)
+             .then(res => {
             const breweries = res.data.data;
             const breweriesOpenToPublic = breweries.filter(brew => {
                 if (brew.openToPublic === 'Y') {

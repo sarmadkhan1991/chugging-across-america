@@ -3,7 +3,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { addCitiesToTrip } from '../../Redux/tripReducer';
-import { Link } from 'react-router-dom'
 
 // CSS
 import './CreateTrip.css'

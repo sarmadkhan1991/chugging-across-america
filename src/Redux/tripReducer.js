@@ -1,4 +1,5 @@
-
+import axios from 'axios';
+import {} from 'redux-promise-middleware'
 //initial state
 const initialState = {
     trip: null
@@ -17,8 +18,8 @@ export function addBreweriesToTrip (breweries) {
     return {
         type: ADD_BREWERIES,
         payload: breweries
-    }
-}
+    };
+};
     
 export function addCitiesToTrip(cities) {
     return {
