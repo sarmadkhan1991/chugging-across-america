@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { addCitiesToTrip } from '../../Redux/tripReducer';
+import { Redirect } from 'react-router-dom';
 
 // CSS
 import './CreateTrip.css'
@@ -14,7 +15,8 @@ class CreateTrip extends React.Component {
     super(props);
     this.state = {
       startCity: "",
-      endCity: ""
+      endCity: "",
+      redirect: false
     }
   }
 
@@ -49,35 +51,43 @@ class CreateTrip extends React.Component {
       .catch(e => console.log(e));
 
     this.props.addCitiesToTrip(cities);
-    this.props.history.push('/map');
+    this.setState({
+      redirect: true
+    })
   }
-
+  
   render() {
+    if(this.state.redirect) {
+      return <Redirect to='/trip' />
+    }
+
     return (
       <div>
-        <h2>Enter two cities to begin:</h2>
-        <form
-          onSubmit={e => {
-            e.preventDefault();
-            this.submitHandler();
-          }}
-        >
-          <input
-            type="text"
-            required
-            name="startCity"
-            placeholder="Start"
-            onChange={e => this.changeHandler(e.target.name, e.target.value)}
-          />
-          <input
-            type="text"
-            required
-            name="endCity"
-            placeholder="End"
-            onChange={e => this.changeHandler(e.target.name, e.target.value)}
-          />
-          <button type="submit">Find Beer</button>
-        </form>
+        <main>
+          <h2>Enter two cities to begin:</h2>
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+              this.submitHandler();
+            }}
+          >
+            <input
+              type="text"
+              required
+              name="startCity"
+              placeholder="Start"
+              onChange={e => this.changeHandler(e.target.name, e.target.value)}
+            />
+            <input
+              type="text"
+              required
+              name="endCity"
+              placeholder="End"
+              onChange={e => this.changeHandler(e.target.name, e.target.value)}
+            />
+            <button type="submit">Find Beer</button>
+          </form>
+        </main>
       </div>
     );
   }

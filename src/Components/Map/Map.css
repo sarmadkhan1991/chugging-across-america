@@ -1,4 +1,4 @@
-.marker {
+.brew-marker {
   font-size: 16px;
   height: 50px;
   width: 50px;
@@ -6,10 +6,19 @@
   transform: translate(-50%, -50%);
 }
 
-.marker img {
+.brew-marker img {
   height: inherit;
 }
 
-.marker:hover {
+.brew-marker:hover {
   cursor: pointer;
+}
+
+.city-marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background-color: rgba(255, 0, 0, 0.384);
+  height: 20px;
+  width: 20px;
 }

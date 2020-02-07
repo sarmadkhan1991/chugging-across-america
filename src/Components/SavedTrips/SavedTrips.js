@@ -9,7 +9,7 @@ class SavedTrips extends React.Component {
             savedTrips: []
         }
         this.getSavedTrips = this.getSavedTrips.bind(this);
-        this.getSession = this.getSession.bind(this);
+        // this.getSession = this.getSession.bind(this);
     }
 
     componentDidMount() {
