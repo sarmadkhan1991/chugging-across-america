@@ -17,6 +17,7 @@ class Weather extends React.Component {
 
     componentDidMount() {
         this.getWeather();
+        
     }
 
     getWeather() {
@@ -43,14 +44,14 @@ class Weather extends React.Component {
     }
 
     render() {
-        const { report, city } = this.state;
-       
-       
+        const { report } = this.state;
+        const { city } = this.props;
+     
           let regex = /12:00:00/
           const mappedDays = report.filter(today => today.dt_txt.match(regex));
-          console.log(mappedDays);
+       
           const mappedReports = mappedDays.map((r, index) => {
-            console.log(this.getDayOfWeek(r.dt_txt))
+           
             return (
                 <div key={index}>
                     <div>{this.getDayOfWeek(r.dt_txt)}</div>
@@ -71,7 +72,7 @@ class Weather extends React.Component {
         return (
             <div>
   
-                <div>{city}</div>
+                <div>{city.name}</div>
                 <div>{mappedReports}</div>
         
             </div>
@@ -81,8 +82,9 @@ class Weather extends React.Component {
 }
 
 const mapStateToProps = state => {
+    console.log(state)
     return {
-        city: state.trip.city[0]
+        city: state.trip.cities[1]
     }
 }
 
