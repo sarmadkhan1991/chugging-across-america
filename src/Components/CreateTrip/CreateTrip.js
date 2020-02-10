@@ -81,8 +81,9 @@ class CreateTrip extends React.Component {
                   return brewery
               })
               this.props.addBreweriesToTrip(breweryInfo);
+            } else {
+              this.props.addBreweriesToTrip([]);
             }
-            this.props.addBreweriesToTrip([]);
         })
         .catch(e => console.log(e));
 
