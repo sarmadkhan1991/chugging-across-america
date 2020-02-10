@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
 
 export default class ResetPassword extends Component {
     constructor(props) {
@@ -18,21 +18,19 @@ export default class ResetPassword extends Component {
     }
     updatePassword() {
         const { newPassword, confirmPassword } = this.state;
-        if(newPassword == '') {
-            alert("Please enter a new password.")
-        } else if(confirmPassword == '') {
-            alert("Please confirm password.")
+        if(newPassword == "" || confirmPassword == "") {
+            alert("All fields are required.")
         } else if(newPassword != confirmPassword) {
             alert("ERROR: New Password and Confirm Password must match. Please try again.")
         } else {
-            axios.put('/api/auth/updatePassword', {confirmPassword})
+            axios.put("/api/auth/updatePassword", {confirmPassword})
             .then(() => {
                 this.setState( {
                     oldPassword: "",
                     newPassword: "",
                     confirmPassword: ""
                 })
-                this.props.history.push('/')
+                this.props.history.push("/")
             })
         }
     }
