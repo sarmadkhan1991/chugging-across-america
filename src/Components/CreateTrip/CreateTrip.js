@@ -50,7 +50,7 @@ class CreateTrip extends React.Component {
       })
       .catch(e => console.log(e));
       
-      await axios.get(`https://sandbox-api.brewerydb.com/v2/search/geo/point?lat=${cities[1].lat}&lng=${cities[1].lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&raduis=100`)
+      await axios.get(`https://sandbox-api.brewerydb.com/v2/search/geo/point?lat=${cities[1].lat}&lng=${cities[1].lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
              .then(res => {
             const breweries = res.data.data;
             const breweriesOpenToPublic = breweries.filter(brew => {
@@ -96,7 +96,6 @@ class CreateTrip extends React.Component {
 
     return (
       <div>
-        <main>
           <h2>Enter two cities to begin:</h2>
           <form
             onSubmit={e => {
@@ -120,7 +119,6 @@ class CreateTrip extends React.Component {
             />
             <button type="submit">Find Beer</button>
           </form>
-        </main>
       </div>
     );
   }
