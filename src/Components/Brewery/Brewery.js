@@ -3,6 +3,7 @@ import axios from 'axios';
 import './Brewery.css';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
+import Rating from '../Rating/Rating';
 
 
 class Breweries extends Component {
@@ -49,6 +50,7 @@ class Breweries extends Component {
                 <h1>Brewery:</h1>
                     <div>name: {currentBrewery.name}</div>
                     <div>address: {currentBrewery.address.streetAddress}, {currentBrewery.address.city}, {currentBrewery.address.state}, {currentBrewery.address.zip}</div>
+                    <Rating />
                 <h1>beer list:</h1>
                 {mappedBeers}
             </div>
