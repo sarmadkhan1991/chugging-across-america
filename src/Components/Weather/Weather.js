@@ -22,7 +22,9 @@ class Weather extends React.Component {
 
     getWeather() {
         const key = process.env.REACT_APP_WEATHER_KEY;
-        axios.get(`http://api.openweathermap.org/data/2.5/forecast?q=California,us&mode=JSON&appid=${key}`).then(res => {
+        const { city } = this.props;
+        console.log(city)
+        axios.get(`http://api.openweathermap.org/data/2.5/forecast?q=${city.name},us&mode=JSON&appid=${key}`).then(res => {
             const weatherReport = res.data;
             this.setState({
                 report: weatherReport.list,
