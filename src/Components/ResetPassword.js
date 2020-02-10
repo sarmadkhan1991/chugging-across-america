@@ -17,16 +17,24 @@ export default class ResetPassword extends Component {
         });
     }
     updatePassword() {
-        const { confirmPassword } = this.state;
-        axios.put('/api/auth/updatePassword', {confirmPassword})
-        .then(() => {
-            this.setState( {
-                oldPassword: "",
-                newPassword: "",
-                confirmPassword: ""
+        const { newPassword, confirmPassword } = this.state;
+        if(newPassword == '') {
+            alert("Please enter a new password.")
+        } else if(confirmPassword == '') {
+            alert("Please confirm password.")
+        } else if(newPassword != confirmPassword) {
+            alert("ERROR: New Password and Confirm Password must match. Please try again.")
+        } else {
+            axios.put('/api/auth/updatePassword', {confirmPassword})
+            .then(() => {
+                this.setState( {
+                    oldPassword: "",
+                    newPassword: "",
+                    confirmPassword: ""
+                })
+                this.props.history.push('/')
             })
-            this.props.history.push('/')
-        })
+        }
     }
     render() {
         return (
