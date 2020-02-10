@@ -15,7 +15,7 @@ const BrewMarker = ({ text }) => {
   <div
     className="brew-marker"
     onClick={() => {
-      alert("Put info here.")
+      alert(text)
     }}
   >
     <img src={beer} alt="brewery location" />
@@ -38,7 +38,7 @@ function Map(props) {
   // Locations to pin on map.
   var cityLocations = props.cities;
 
-  var center, zoom, mappedCities;
+  var center, zoom, mappedCities, mappedBreweries;
 
   // Initialize bounds to 0.
   var northBound = 0;
@@ -86,6 +86,17 @@ function Map(props) {
         />
       )
     });
+
+    mappedBreweries = props.breweries.map((brewery) => {
+      return (
+        <BrewMarker
+          key={brewery.locId}
+          lat={brewery.lat}
+          lng={brewery.lng}
+          text={brewery.name}
+        />
+      )
+    });
   }
 
   // Display google map.
@@ -121,6 +132,7 @@ function Map(props) {
         }
       >
         {mappedCities}
+        {mappedBreweries}
       </GoogleMap>
     </div>
   );

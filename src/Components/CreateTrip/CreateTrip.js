@@ -97,7 +97,6 @@ class CreateTrip extends React.Component {
 
     return (
       <div>
-        <main>
           <h2>Enter two cities to begin:</h2>
           <form
             onSubmit={e => {
@@ -121,7 +120,6 @@ class CreateTrip extends React.Component {
             />
             <button type="submit">Find Beer</button>
           </form>
-        </main>
       </div>
     );
   }
