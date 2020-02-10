@@ -57,7 +57,7 @@ export default class ResetPassword extends Component {
                         <button>
                             Cancel
                         </button>
-                        <button>
+                        <button onClick={this.updatePassword}>
                             Reset
                         </button>
                     </div>
