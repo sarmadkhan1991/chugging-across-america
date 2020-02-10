@@ -27,7 +27,7 @@ app.get('/api/auth/userSession', authCtrl.getUserSession);
 app.post('/api/auth/register', authCtrl.register);
 app.post('/api/auth/login', authCtrl.login);
 app.post('/api/auth/logout', authCtrl.logout);
-app.put('/api/auth/updatePassword', authCtrl.updatePassword);
+app.put('/api/auth/updatePassword', auth.usersOnly, authCtrl.updatePassword);
 
 app.get('/user/trips', auth.usersOnly, tripCtrl.getTrips);
 app.post('/user/trip', auth.usersOnly, tripCtrl.addTrip);
