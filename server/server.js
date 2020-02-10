@@ -34,5 +34,6 @@ app.post('/user/trip', auth.usersOnly, tripCtrl.addTrip);
 app.delete('/user/trip/:id', tripCtrl.deleteTrip);
 
 app.get('/api/rating/:id', ratingCtrl.getRatings);
+app.post('/api/rating/:id', ratingCtrl.addRating);
 
 app.listen(SERVER_PORT, () => console.log(`Server listening on port ${SERVER_PORT}...`));
