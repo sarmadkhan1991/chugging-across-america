@@ -89,7 +89,7 @@ class Header extends Component {
                     {user.username ?
                         (
                             <div>
-                                Cheers, {user.username}! | 
+                                Cheers, {user.username} | 
                                 <button onClick={this.logout}>
                                     Logout
                                 </button>
