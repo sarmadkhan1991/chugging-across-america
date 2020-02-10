@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class ResetPassword extends Component {
     constructor(props) {
@@ -14,6 +15,18 @@ export default class ResetPassword extends Component {
         this.setState({
             [key]: value
         });
+    }
+    updatePassword() {
+        const { confirmPassword } = this.state;
+        axios.put('/api/auth/updatePassword', {confirmPassword})
+        .then(() => {
+            this.setState( {
+                oldPassword: "",
+                newPassword: "",
+                confirmPassword: ""
+            })
+            this.props.history.push('/')
+        })
     }
     render() {
         return (
@@ -45,7 +58,7 @@ export default class ResetPassword extends Component {
                             Cancel
                         </button>
                         <button>
-                            Save
+                            Reset
                         </button>
                     </div>
                 </div>
