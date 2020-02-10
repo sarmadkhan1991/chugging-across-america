@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom'
 
 
 function Trip(props) {
-        console.log(props)
         const mappedBreweries = props.breweries.map(brew => {
+            console.log(brew)
             return (
                 <div key={brew.locId}>
                     <Link to='/brewery' >

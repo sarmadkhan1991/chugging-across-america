@@ -84,7 +84,7 @@ class Weather extends React.Component {
 const mapStateToProps = state => {
     console.log(state)
     return {
-        city: state.trip.cities[1]
+        city: state.cities[1]
     }
 }
 

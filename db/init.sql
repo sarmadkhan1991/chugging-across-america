@@ -46,5 +46,6 @@ CREATE TABLE ratings
     id SERIAL PRIMARY KEY,
     brewery_id VARCHAR(40) NOT NULL,
     rating INTEGER NOT NULL,
+    review TEXT NOT NULL,
     user_id INTEGER REFERENCES users(id)
 );
