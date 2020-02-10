@@ -50,8 +50,9 @@ class CreateTrip extends React.Component {
       })
       .catch(e => console.log(e));
       
-      await axios.get(`https://sandbox-api.brewerydb.com/v2/search/geo/point?lat=${cities[1].lat}&lng=${cities[1].lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&raduis=100`)
+      await axios.get(`https://sandbox-api.brewerydb.com/v2/search/geo/point?lat=${cities[1].lat}&lng=${cities[1].lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
              .then(res => {
+               console.log(res.data);
             const breweries = res.data.data;
             const breweriesOpenToPublic = breweries.filter(brew => {
                 if (brew.openToPublic === 'Y') {
