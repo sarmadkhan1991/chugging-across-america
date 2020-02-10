@@ -33,6 +33,7 @@ function Trip(props) {
 }
 
 function mapStateToProps (reduxState) {
+    console.log(reduxState);
     return reduxState
 }
 
