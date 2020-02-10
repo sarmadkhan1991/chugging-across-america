@@ -5,6 +5,7 @@ const massive = require('massive');
 const app = express();
 const tripCtrl = require('./controllers/tripController');
 const authCtrl = require('./controllers/authController');
+const ratingCtrl = require('./controllers/ratingController');
 const auth = require('./middleware/authMiddleware');
 
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING } = process.env;
@@ -31,5 +32,7 @@ app.put('/api/auth/updatePassword', authCtrl.updatePassword);
 app.get('/user/trips', auth.usersOnly, tripCtrl.getTrips);
 app.post('/user/trip', auth.usersOnly, tripCtrl.addTrip);
 app.delete('/user/trip/:id', tripCtrl.deleteTrip);
+
+app.get('/api/rating/:id', ratingCtrl.getRatings);
 
 app.listen(SERVER_PORT, () => console.log(`Server listening on port ${SERVER_PORT}...`));
