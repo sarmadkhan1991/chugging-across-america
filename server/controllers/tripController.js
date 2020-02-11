@@ -12,9 +12,9 @@ module.exports = {
     addTrip: async (req, res, next) => {
         const { id } = req.session.user;
         console.log(req.session);
-        const { starting_city, starting_date, ending_city, ending_date } = req.body
+        const { cityOne, cityTwo } = req.body
         const db = req.app.get('db');
-        await db.add_trip(starting_city, starting_date, ending_city, ending_date, id);
+        await db.add_trip(cityOne, cityTwo, id, false);
         res.status(200).send("Added to trips");
 
     },

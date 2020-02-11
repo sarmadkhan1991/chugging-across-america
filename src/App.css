@@ -1,5 +1,5 @@
 body {
-  background-color: #221e11;
+  /* background-color: #221e11; */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
@@ -18,7 +18,7 @@ footer {
 
 header, footer {
   height: 15vh;
-  width: 100vw;
+  width: 100%;
   box-sizing: border-box;
   padding: 10px;
   background-color: #000;
@@ -26,14 +26,19 @@ header, footer {
 }
 
 main {
-  height: calc(100vh - 30vh);
+  min-height: calc(100vh - 30vh);
+  width: 85vw;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("https://bloximages.newyork1.vip.townnews.com/gazette.com/content/tncms/assets/v3/editorial/5/f0/5f008438-6075-11e9-8ddd-c344ac5900f7/5cb61ec7e24bb.image.jpg?resize=1700%2C731");
+  /* background-image: url("https://bloximages.newyork1.vip.townnews.com/gazette.com/content/tncms/assets/v3/editorial/5/f0/5f008438-6075-11e9-8ddd-c344ac5900f7/5cb61ec7e24bb.image.jpg?resize=1700%2C731");
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: center; */
   margin: auto;
+}
+
+button {
+  cursor: pointer;
 }
 
 .login-container {
@@ -42,10 +47,14 @@ main {
   justify-content: space-around;
 }
 
-.content-container {
-  background-color: #c5b091;
-  opacity: 0.85;
-  padding: 25px;
-  border-radius: 3px;
-  border: 2px solid rgba(255, 255, 255, 0.385);
+.weather-container {
+  width: 75px;
+  float: left;
+  font-size: 9pt;
+  padding: 2px;
+  text-align: center;
+}
+
+.clear-float {
+  clear: both;
 }
