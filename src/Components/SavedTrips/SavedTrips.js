@@ -32,8 +32,13 @@ class SavedTrips extends React.Component {
         const { savedTrips } = this.state;
         const mappedTrips = savedTrips.map(trip => {
             return (
-                <div>
-                    TRIPS
+                <div key={trip.id}>
+                    <div>
+                        Current Trips:
+                    </div>
+                    <div>
+                        Finished Trips:
+                    </div>
                 </div>
             )
         })

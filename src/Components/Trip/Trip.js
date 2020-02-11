@@ -4,6 +4,7 @@ import Map from '../Map/Map';
 import {connect} from 'react-redux';
 import {getBrewery} from '../../Redux/tripReducer';
 import { Link } from 'react-router-dom'
+import SaveTripButton from "../SaveTripButton/SaveTripButton";
 
 
 function Trip(props) {
@@ -25,13 +26,11 @@ function Trip(props) {
             var mappedBreweries = `No Breweries Found in ${props.cities[1].name}`
         }
         return (
-            <div>
+            <div className="content-container">
                 <Map/>
                 <Weather/>
-                {/* {user.session ? <button>Save Trip</button> 
-                : null
-                } */}
                 {mappedBreweries}
+                <SaveTripButton/>
             </div>
         )
     
