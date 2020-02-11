@@ -18,7 +18,7 @@ footer {
 
 header, footer {
   height: 15vh;
-  width: 100vw;
+  width: 100%;
   box-sizing: border-box;
   padding: 10px;
   background-color: #000;
@@ -26,7 +26,7 @@ header, footer {
 }
 
 main {
-  height: calc(100vh - 30vh);
+  min-height: calc(100vh - 30vh);
   width: 85vw;
   display: flex;
   align-items: center;
@@ -37,24 +37,20 @@ main {
   margin: auto;
 }
 
+button {
+  cursor: pointer;
+}
+
 .login-container {
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
 
-.content-container {
-  background-color: #c5b091;
-  width: 100%;
-  opacity: 0.85;
-  padding: 25px;
-  border-radius: 3px;
-  border: 2px solid rgba(255, 255, 255, 0.385);
-}
-
 .weather-container {
+  width: 75px;
   float: left;
-  font-size: 10pt;
+  font-size: 9pt;
   padding: 2px;
   text-align: center;
 }

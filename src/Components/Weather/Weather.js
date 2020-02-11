@@ -57,11 +57,12 @@ class Weather extends React.Component {
             return (
                 <div key={index}>
                     <div className="weather-container">
-                        {this.getDayOfWeek(r.dt_txt)}<br />
+                        {this.getDayOfWeek(r.dt_txt)}<br /><br />
                         {this.calcFahrenheit(r.main.temp)}&#8457;<br />
                         <img src={`http://openweathermap.org/img/wn/${r.weather[0].icon}.png`} alt="forecast" height="50px"/><br />
                         {r.weather[0].description}
                     </div>
+                    
                 </div>
             )
           })
@@ -72,8 +73,10 @@ class Weather extends React.Component {
             <div>
   
                 <div>{city.name}</div>
+                <hr />
                 <div>{mappedReports}</div>
-        
+                
+                <hr className="clear-float" />
             </div>
         )
     }
