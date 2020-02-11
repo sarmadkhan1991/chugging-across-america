@@ -1,146 +1,104 @@
-// Dependencies
-import React from 'react';
-import GoogleMap from 'google-map-react';
-import { fitBounds } from 'google-map-react/utils';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-// CSS
 import './Map.css';
 
-const beer = require('./beer_wheels.png')
+const brewery = require('./beer_wheels.png');
 
-// Define a marker component to display on the map.
-const BrewMarker = ({ text }) => {
-  return (
-  <div
-    className="brew-marker"
-    onClick={() => {
-      alert(text)
-    }}
-  >
-    <img src={beer} alt="brewery location" />
-  </div>
-)}
-
-const CityMarker = () => {
-  return (
-    <div
-    className="city-marker"
-    onClick={() => {
-      alert("Put info here.")
-    }}
-  >
-  </div>
-  )
-}
-
-function Map(props) {
-  // Locations to pin on map.
-  var cityLocations = props.cities;
-
-  var center, zoom, mappedCities, mappedBreweries;
-
-  // Initialize bounds to 0.
-  var northBound = 0;
-  var eastBound = 0;
-  var southBound = 0;
-  var westBound = 0;
-
-  if(cityLocations) {
-    
-    // Determine map bounds based on given locations.
-    cityLocations.forEach((location, index) => {
-      if (index === 0) {
-        northBound = location.lat;
-        eastBound = location.lng;
-        southBound = location.lat;
-        westBound = location.lng;
-      } else {
-        if (location.lat > northBound) northBound = location.lat;
-        if (location.lat < southBound) southBound = location.lat;
-        if (location.lng > eastBound) eastBound = location.lng;
-        if (location.lng < westBound) westBound = location.lng;
-      }
-    })
-  
-    // Determine map center and zoom values using google-map-react built in function.
-    const bounds = {
-      ne: {lat: northBound, lng: eastBound},
-      sw: {lat: southBound, lng: westBound}
-    };
-    const size = {
-      width: 375,
-      height: 400
-    };
-    center = fitBounds(bounds, size).center;
-    zoom = fitBounds(bounds, size).zoom;
-  
-    // Create map markers for locations.
-    mappedCities = cityLocations.map((location, index) => {
-      return (
-        <CityMarker
-          key={index}
-          lat={location.lat}
-          lng={location.lng}
-          text={location.name}
-        />
-      )
-    });
-
-    mappedBreweries = props.breweries.map((brewery) => {
-      return (
-        <BrewMarker
-          key={brewery.locId}
-          lat={brewery.lat}
-          lng={brewery.lng}
-          text={brewery.name}
-        />
-      )
-    });
+export class Map extends Component {
+  constructor(props) {
+    super(props);
   }
 
-  // Display google map.
-  return (
-    !cityLocations
-    ?
-    <div>
-      No Destinations
-    </div>
-    :
-    <div style={{ height: '400px', width: '375px' }}>
-      <GoogleMap
-        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
-        defaultCenter={center}
-        defaultZoom={zoom}
-        onClick={data => {
-          console.log(data)
-        }}
-        options={
-          {
-            styles: [
-              {
-                "featureType": "administrative.neighborhood",
-                "elementType": "labels.text",
-                "stylers": [
-                  {
-                    "visibility": "off"
-                  }
-                ]
-              }
-            ] 
-          }
-        }
-      >
-        {mappedCities}
-        {mappedBreweries}
-      </GoogleMap>
-    </div>
-  );
+  componentDidMount() {
+    this.renderMap();
+  }
+
+  renderMap = () => {
+    loadScript(`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}&callback=initMap`);
+    window.initMap = this.initMap;
+  }
+
+  initMap = () => {
+    var directionsService = new window.google.maps.DirectionsService();
+    var directionsRenderer = new window.google.maps.DirectionsRenderer();
+    var map = new window.google.maps.Map(document.getElementById('map'), {
+      center: {lat: this.props.cities[1].lat, lng: this.props.cities[1].lng},
+      zoom: 8,
+      gestureHandling: 'greedy'
+    });
+
+    var start = {lat: this.props.cities[0].lat, lng: this.props.cities[0].lng}
+    var end = {lat: this.props.cities[1].lat, lng: this.props.cities[1].lng}
+    var request = {
+      origin: start,
+      destination: end,
+      travelMode: 'DRIVING'
+    };
+    directionsService.route(request, function(result, status) {
+      if (status == 'OK') {
+        directionsRenderer.setDirections(result);
+      }
+    })
+    
+    directionsRenderer.setMap(map);
+    this.setMarkers(map);
+  }
+  
+  setMarkers = (map) => {
+    for (let i = 0; i < this.props.cities.length; i++ ){
+      let marker = new window.google.maps.Marker({
+        position: {lat: this.props.cities[i].lat, lng: this.props.cities[i].lng},
+        map: map,
+        title: this.props.cities[i].name
+      })
+    }
+    
+    var icon = {
+      url: brewery,
+      scaledSize: new window.google.maps.Size(50,50),
+      origin: new window.google.maps.Point(0,0),
+      anchor: new window.google.maps.Point(25,25)
+    }
+    
+    
+    for (let i = 0; i < this.props.breweries.length; i++ ){
+      let infowindow = new window.google.maps.InfoWindow({
+        content: this.props.breweries[i].name
+      })
+      
+      let marker = new window.google.maps.Marker({
+        position: {lat: this.props.breweries[i].lat, lng: this.props.breweries[i].lng},
+        map: map,
+        icon: icon,
+        title: this.props.breweries[i].name
+      })
+
+      marker.addListener('click', function() {
+        infowindow.open(map, marker);
+      });
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <div id="map" />
+      </div>
+    )
+  }
 }
 
-// Connect redux state to props.
+function loadScript(url) {
+  var index = window.document.getElementsByTagName("script")[0];
+  var script = window.document.createElement("script");
+  script.src = url;
+  script.async = true;
+  script.defer = true;
+  index.parentNode.insertBefore(script, index);
+}
+
 function mapReduxStateToProps(reduxState) {
   return reduxState;
 }
 
-export default connect(mapReduxStateToProps, null) (Map);
+export default connect(mapReduxStateToProps) (Map);
