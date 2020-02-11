@@ -56,15 +56,12 @@ class Weather extends React.Component {
            
             return (
                 <div key={index}>
-                    <div>{this.getDayOfWeek(r.dt_txt)}</div>
-                    <div>{this.calcFahrenheit(r.main.temp)}</div>
-                    <div><img src={`http://openweathermap.org/img/wn/${r.weather[0].icon}.png`} alt="forecast"/>
-                    <p>{r.weather[0].description}</p>
+                    <div className="weather-container">
+                        {this.getDayOfWeek(r.dt_txt)}<br />
+                        {this.calcFahrenheit(r.main.temp)}&#8457;<br />
+                        <img src={`http://openweathermap.org/img/wn/${r.weather[0].icon}.png`} alt="forecast" height="50px"/><br />
+                        {r.weather[0].description}
                     </div>
-                    
-                    <span>Min:{this.calcFahrenheit(r.main.temp_min)}, Max:{this.calcFahrenheit(r.main.temp_max)}</span>
-
-
                 </div>
             )
           })
