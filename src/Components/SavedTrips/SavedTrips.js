@@ -23,6 +23,7 @@ class SavedTrips extends React.Component {
                 savedTrips: res.data
             });
         });
+        
     }
 
 
@@ -30,7 +31,9 @@ class SavedTrips extends React.Component {
   
     render() {
         const { savedTrips } = this.state;
+        
         const mappedTrips = savedTrips.map(trip => {
+            console.log(trip)
             return (
                 <div key={trip.id}>
                     <div>

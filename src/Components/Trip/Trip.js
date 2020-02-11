@@ -26,7 +26,7 @@ function Trip(props) {
             var mappedBreweries = `No Breweries Found in ${props.cities[1].name}`
         }
         return (
-            <div className="content-container">
+            <div>
                 <Map/>
                 <Weather/>
                 {mappedBreweries}

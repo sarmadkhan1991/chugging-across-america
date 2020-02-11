@@ -14,7 +14,7 @@ module.exports = {
         console.log(req.session);
         const { cityOne, cityTwo } = req.body
         const db = req.app.get('db');
-        await db.add_trip(cityOne, cityTwo, id);
+        await db.add_trip(cityOne, cityTwo, id, false);
         res.status(200).send("Added to trips");
 
     },
