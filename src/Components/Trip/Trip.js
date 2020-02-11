@@ -7,9 +7,9 @@ import { Link } from 'react-router-dom'
 
 
 function Trip(props) {
-        console.log(props)
+        var mappedBreweries;
         if (props.breweries.length > 0){
-            var mappedBreweries = props.breweries.map(brew => {
+            mappedBreweries = props.breweries.map(brew => {
                 return (
                     <div key={brew.locId}>
                         <Link to='/brewery' >
@@ -22,7 +22,7 @@ function Trip(props) {
                 }
             )
         } else {
-            var mappedBreweries = `No Breweries Found in ${props.cities[1].name}`
+            mappedBreweries = `No Breweries Found in ${props.cities[1].name}`
         }
         return (
             <div>
@@ -38,7 +38,6 @@ function Trip(props) {
 }
 
 function mapStateToProps (reduxState) {
-    console.log(reduxState);
     return reduxState
 }
 

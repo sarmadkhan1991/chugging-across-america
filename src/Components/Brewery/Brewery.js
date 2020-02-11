@@ -30,27 +30,31 @@ class Breweries extends Component {
     }
 
     render () {
+        console.log(this.props);
+        console.log(this.state.beers);
         const {currentBrewery} = this.props.trip
         const {beers} = this.state;
         const mappedBeers = beers.map(beer => {
             return (
-                <div key={beer.id}>
-                    <div>beer name: {beer.name}</div>
+                <div key={beer.id} className='beer-container'>
+                    <div>beer name: <br/> {beer.name}</div>
                     <div>beer type: {beer.style.category.name}</div>
-                    <div>ABV: {beer.abv}%</div>
+                    <div>ABV: {beer.abv ? beer.abv + '%' : 'N/A'}</div>
                 </div>
             )
         })
         return (
-            <div>
+            <div className='brewery-component'>
                 <Link to='/trip'>
                     <div>Back to trip</div>
                 </Link>
-                <h1>Brewery:</h1>
-                    <div>name: {currentBrewery.name}</div>
-                    <div>address: {currentBrewery.address.streetAddress}, {currentBrewery.address.city}, {currentBrewery.address.state}, {currentBrewery.address.zip}</div>
-                <h1>beer list:</h1>
-                {mappedBeers}
+                <div className='brewery-info'>
+                    <h1>Breweryname:</h1>
+                        <div>{currentBrewery.name}</div>
+                        <div>{currentBrewery.address.streetAddress}, {currentBrewery.address.city}, {currentBrewery.address.state}, {currentBrewery.address.zip}</div>
+                </div>
+                    <h1>beer list:</h1>
+                    {mappedBeers}
             </div>
         )
     }
