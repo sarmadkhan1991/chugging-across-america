@@ -9,12 +9,10 @@ import './Home.css';
 
 function Home() {
   return (
-    <div>
-      <main>
+    <div className="content-container">
         <h1>Welcome.</h1>
         <h2>Start chugging</h2>
         <CreateTrip />
-      </main>
     </div>
   );
 }

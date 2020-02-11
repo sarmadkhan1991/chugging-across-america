@@ -27,12 +27,13 @@ app.get('/api/auth/userSession', authCtrl.getUserSession);
 app.post('/api/auth/register', authCtrl.register);
 app.post('/api/auth/login', authCtrl.login);
 app.post('/api/auth/logout', authCtrl.logout);
-app.put('/api/auth/updatePassword', authCtrl.updatePassword);
+app.put('/api/auth/updatePassword', auth.usersOnly, authCtrl.updatePassword);
 
 app.get('/user/trips', auth.usersOnly, tripCtrl.getTrips);
 app.post('/user/trip', auth.usersOnly, tripCtrl.addTrip);
 app.delete('/user/trip/:id', tripCtrl.deleteTrip);
 
 app.get('/api/rating/:id', ratingCtrl.getRatings);
+app.post('/api/rating/:id', ratingCtrl.addRating);
 
 app.listen(SERVER_PORT, () => console.log(`Server listening on port ${SERVER_PORT}...`));

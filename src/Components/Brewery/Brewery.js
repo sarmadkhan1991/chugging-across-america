@@ -3,6 +3,7 @@ import axios from 'axios';
 import './Brewery.css';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
+import Rating from '../Rating/Rating';
 
 
 class Breweries extends Component {
@@ -48,13 +49,12 @@ class Breweries extends Component {
                 <Link to='/trip'>
                     <div>Back to trip</div>
                 </Link>
-                <div className='brewery-info'>
-                    <h1>Breweryname:</h1>
-                        <div>{currentBrewery.name}</div>
-                        <div>{currentBrewery.address.streetAddress}, {currentBrewery.address.city}, {currentBrewery.address.state}, {currentBrewery.address.zip}</div>
-                </div>
-                    <h1>beer list:</h1>
-                    {mappedBeers}
+                <h1>Breweryname:</h1>
+                    <div>{currentBrewery.name}</div>
+                    <div>address: {currentBrewery.address.streetAddress}, {currentBrewery.address.city}, {currentBrewery.address.state}, {currentBrewery.address.zip}</div>
+                    <Rating />
+                <h1>beer list:</h1>
+                {mappedBeers}
             </div>
         )
     }
