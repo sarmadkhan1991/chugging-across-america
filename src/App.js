@@ -9,8 +9,12 @@ function App() {
   return (
     <div className="App">
       <Header />
+      <main>
       { routes }
-      
+      </main>
+      <footer>
+        &copy; 2020 All rights reserved by Chugging Across America
+      </footer>
     </div>
   );
 }
