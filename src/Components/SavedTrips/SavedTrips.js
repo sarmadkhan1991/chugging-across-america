@@ -31,17 +31,14 @@ class SavedTrips extends React.Component {
   
     render() {
         const { savedTrips } = this.state;
-        
+       
         const mappedTrips = savedTrips.map(trip => {
-            console.log(trip)
+           
             return (
                 <div key={trip.id}>
-                    <div>
-                        Current Trips:
-                    </div>
-                    <div>
-                        Finished Trips:
-                    </div>
+                    <div>Starting:{trip.starting_city}</div>
+                    <div>Ending:{trip.ending_city}</div>
+                    Completed:<button>{trip.completed.toString()}</button>
                 </div>
             )
         })

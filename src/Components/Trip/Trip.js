@@ -29,7 +29,7 @@ function Trip(props) {
             <div>
                 <Map/>
                 <Weather/>
-                {mappedBreweries}
+                <div>{mappedBreweries}</div>
                 <SaveTripButton/>
             </div>
         )
