@@ -6,7 +6,8 @@ class SavedTrips extends React.Component {
     constructor() {
         super();
         this.state = {
-            savedTrips: []
+            incomplete:[],
+            complete:[]
         }
         this.getSavedTrips = this.getSavedTrips.bind(this);
         
@@ -19,9 +20,21 @@ class SavedTrips extends React.Component {
     
     getSavedTrips() {
         axios.get("/user/trips").then(res => {
-            this.setState({
-                savedTrips: res.data
-            });
+            const reports = res.data;
+            let isComplete = [];
+            let isNotComplete = [];
+           reports.map(r => {
+               if(r.completed === true) {
+                   isComplete.push(r)
+               } else {
+                   isNotComplete.push(r)
+               }
+           })
+           this.setState({
+               incomplete: isNotComplete,
+               complete: isComplete
+           })
+           
         });
         
     }
@@ -30,21 +43,38 @@ class SavedTrips extends React.Component {
 
   
     render() {
-        const { savedTrips } = this.state;
-       
-        const mappedTrips = savedTrips.map(trip => {
-           
+        const { incomplete, complete } = this.state;
+
+        const incompleteTrips = incomplete.map(trip => {
             return (
                 <div key={trip.id}>
-                    <div>Starting:{trip.starting_city}</div>
-                    <div>Ending:{trip.ending_city}</div>
+                    <div>{trip.starting_city}</div>
+                    <div>{trip.ending_city}</div>
                     Completed:<button>{trip.completed.toString()}</button>
                 </div>
             )
+        });
+        const completedTrips = complete.map(trip => {
+            return (
+                <div key={trip.id}>
+                <div>{trip.starting_city}</div>
+                <div>{trip.ending_city}</div>
+                Completed:<button>{trip.completed.toString()}</button>
+            </div>
+            )
         })
+
+        
         return(
             <div>
-                {mappedTrips}
+                <div>
+                    <h1>Current Trips:</h1>
+                    {incompleteTrips}
+                </div>
+                <div>
+                    <h1>Completed Trips:</h1>
+                    {completedTrips}
+                </div>
             </div>
         )
     }

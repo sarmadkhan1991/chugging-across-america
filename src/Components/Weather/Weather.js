@@ -53,7 +53,7 @@ class Weather extends React.Component {
           const mappedDays = report.filter(today => today.dt_txt.match(regex));
        
           const mappedReports = mappedDays.map((r, index) => {
-           
+           console.log(r)
             return (
                 <div key={index}>
                     <div className="weather-container">
