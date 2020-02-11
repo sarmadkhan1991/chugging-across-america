@@ -17,8 +17,6 @@ CREATE TABLE trips
     id SERIAL PRIMARY KEY,
     starting_city VARCHAR(40) NOT NULL,
     starting_date DATE NOT NULL,
-    ending_city VARCHAR(40) NOT NULL,
-    ending_date DATE NOT NULL,
     user_id INTEGER REFERENCES users(id)
 );
 
