@@ -23,7 +23,6 @@ class Weather extends React.Component {
     getWeather() {
         const key = process.env.REACT_APP_WEATHER_KEY;
         const { city } = this.props;
-        console.log(city)
         axios.get(`http://api.openweathermap.org/data/2.5/forecast?q=${city.name},us&mode=JSON&appid=${key}`).then(res => {
             const weatherReport = res.data;
             this.setState({
@@ -53,7 +52,6 @@ class Weather extends React.Component {
           const mappedDays = report.filter(today => today.dt_txt.match(regex));
        
           const mappedReports = mappedDays.map((r, index) => {
-           console.log(r)
             return (
                 <div key={index}>
                     <div className="weather-container">
@@ -84,7 +82,6 @@ class Weather extends React.Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state)
     return {
         city: state.cities[1]
     }

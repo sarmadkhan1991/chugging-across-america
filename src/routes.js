@@ -1,7 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Brewery from './Components/Brewery/Brewery';
-import Map from './Components/Map/Map';
 import CreateTrip from './Components/CreateTrip/CreateTrip';
 import Trip from './Components/Trip/Trip';
 import Home from './Components/Home/Home';

@@ -21,7 +21,9 @@ class Breweries extends Component {
                 const beers = res.data.data;
                 const currentBeers = beers.filter(beer => {
                     if (beer.isRetired === 'N'){
-                        return beer
+                        return beer;
+                    } else {
+                        return null;
                     }
                 })
                 this.setState({
@@ -37,7 +39,13 @@ class Breweries extends Component {
             return (
                 <div key={beer.id}>
                     <div>beer name: {beer.name}</div>
-                    <div>beer type: {beer.style.category.name}</div>
+                    {
+                        beer.style
+                        ?
+                        <div>beer type: {beer.style.category.name}</div>
+                        :
+                        <div>beer type: no listed type</div>
+                    }
                     <div>ABV: {beer.abv}%</div>
                 </div>
             )
