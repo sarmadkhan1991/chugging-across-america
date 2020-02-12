@@ -30,6 +30,7 @@ app.post('/api/auth/logout', authCtrl.logout);
 app.put('/api/auth/updatePassword', auth.usersOnly, authCtrl.updatePassword);
 
 app.get('/user/trips', auth.usersOnly, tripCtrl.getTrips);
+app.put('/user/trips', auth.usersOnly, tripCtrl.completedTrip)
 app.post('/user/trip', auth.usersOnly, tripCtrl.addTrip);
 app.delete('/user/trip/:id', tripCtrl.deleteTrip);
 

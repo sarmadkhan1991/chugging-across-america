@@ -19,7 +19,7 @@ class Header extends Component {
 
     componentDidMount() {
         axios
-        .get('api/auth/userSession')
+        .get('/api/auth/userSession')
         .then(res => {
             this.setState( {
                 user: res.data
@@ -71,7 +71,7 @@ class Header extends Component {
     }
     logout() {
     axios
-    .post("api/auth/logout")
+    .post("/api/auth/logout")
     .then(() => {
         this.updateUser({});
     })
