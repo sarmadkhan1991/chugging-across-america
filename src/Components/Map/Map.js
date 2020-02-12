@@ -1,18 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import {getBrewery} from '../../Redux/tripReducer';
 import './Map.css';
+import axios from 'axios';
 
 const brewery = require('./beer_wheels.png');
 
 export class Map extends Component {
-  constructor(props) {
+  constructor(props){
     super(props);
+    this.state = {
+      distance: "",
+      duration: ""
+    }
   }
 
   componentDidMount() {
     this.renderMap();
+    axios
+      .post(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.props.cities[0].name}&destinations=${this.props.cities[1].name}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
+      .then(res => {
+        this.setState({
+          distance: res.data.rows[0].elements[0].distance.text,
+          duration: res.data.rows[0].elements[0].duration.text
+        })
+      })
+      .catch(e => console.log(e));
   }
 
   renderMap = () => {
@@ -36,12 +49,14 @@ export class Map extends Component {
       destination: end,
       travelMode: 'DRIVING'
     };
+    
     directionsService.route(request, function(result, status) {
-      if (status == 'OK') {
+      if (status === 'OK') {
         directionsRenderer.setDirections(result);
       }
-    })
-    
+      console.log(result)
+    });
+
     directionsRenderer.setMap(map);
     this.setMarkers(map);
   }
@@ -57,17 +72,20 @@ export class Map extends Component {
     
     var icon = {
       url: brewery,
-      scaledSize: new window.google.maps.Size(50,50),
+      scaledSize: new window.google.maps.Size(30,30),
       origin: new window.google.maps.Point(0,0),
-      anchor: new window.google.maps.Point(25,25)
+      anchor: new window.google.maps.Point(15,15)
     }
     
     let mappedBreweries = this.props.breweries.map(brew => {
       return (
-          `<div key=${brew.locId}>`+
+          `<div key=${brew.locId} style='width:200px; height:150px; display:flex; justify-content:space-between; align-items:center; flex-direction:column'>`+
             `<img src=${brew.logo} />`+
-            `<div>${brew.name}</div>`+
-            `<div>${brew.address.streetAddress}, ${brew.address.city}, ${brew.address.state}, ${brew.address.zip}</div>`+
+            `<div style='font-weight:700; font-size: 16px'>${brew.name}</div>`+
+            `<div>`+
+              `<div>${brew.address.streetAddress}</div>`+
+              `<div>${brew.address.city}, ${brew.address.state}, ${brew.address.zip}</div>`+
+            `</div>`+
           `</div>`
       )
     });
@@ -94,6 +112,10 @@ export class Map extends Component {
     return (
       <div>
         <div id="map" />
+        <div>
+          <h1>Distance: {this.state.distance}</h1>
+          <h1>Duration: {this.state.duration}</h1>
+        </div>
       </div>
     )
   }
