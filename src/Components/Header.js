@@ -72,7 +72,7 @@ class Header extends Component {
     }
     logout() {
     axios
-    .post("api/auth/logout")
+    .post("/api/auth/logout")
     .then(() => {
         this.updateUser({});
     })
