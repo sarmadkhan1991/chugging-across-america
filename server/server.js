@@ -23,6 +23,8 @@ app.use(
     })
   );
 
+app.use( express.static( `${__dirname}/../build` ) );
+
 app.get('/api/auth/userSession', authCtrl.getUserSession);
 app.post('/api/auth/register', authCtrl.register);
 app.post('/api/auth/login', authCtrl.login);
@@ -37,5 +39,10 @@ app.delete('/user/trip/:id', tripCtrl.deleteTrip);
 
 app.get('/api/rating/:id', ratingCtrl.getRatings);
 app.post('/api/rating/:id', ratingCtrl.addRating);
+
+const path = require('path')
+app.get('*', (req, res)=>{
+  res.sendFile(path.join(__dirname, '../build/index.html'));
+})
 
 app.listen(SERVER_PORT, () => console.log(`Server listening on port ${SERVER_PORT}...`));
