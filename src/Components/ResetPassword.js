@@ -7,40 +7,63 @@ export default class ResetPassword extends Component {
         this.state = {
             oldPassword: "",
             newPassword: "",
-            confirmPassword: ""    
+            confirmPassword: "",
+            msg: ""
         }
         this.changeHandler = this.changeHandler.bind(this);
+        this.updatePassword = this.updatePassword.bind(this);
     }
     changeHandler(key, value) {
         this.setState({
             [key]: value
         });
     }
-    updatePassword() {
-        const { newPassword, confirmPassword } = this.state;
-        if(newPassword == "" || confirmPassword == "") {
+    async updatePassword() {
+        const { oldPassword, newPassword, confirmPassword } = this.state;
+        let pwdVerified = false;
+        
+        if(newPassword === "" || confirmPassword === "") {
+            // this.setState( {
+            //     msg: "All fields are required."
+            // })
             alert("All fields are required.")
-        } else if(newPassword != confirmPassword) {
+            return
+        } else if(newPassword !== confirmPassword) {
             alert("ERROR: New Password and Confirm Password must match. Please try again.")
-        } else {
-            axios.put("/api/auth/updatePassword", {confirmPassword})
-            .then(() => {
-                this.setState( {
-                    oldPassword: "",
-                    newPassword: "",
-                    confirmPassword: ""
-                })
-                this.props.history.push("/")
-            })
+            return
+        } 
+        await axios.put("/api/auth/verifyPassword", {oldPassword})
+        .then(() => {
+            pwdVerified = true;
+        })
+        if(pwdVerified !== true) {
+            alert("Old password not correct.")
+            return
         }
+        axios.put("/api/auth/updatePassword", {confirmPassword})
+        .then(() => {
+            this.setState( {
+                oldPassword: "",
+                newPassword: "",
+                confirmPassword: "",
+                msg: "Your password was reset."
+            })
+        })
     }
     render() {
+        const { msg } = this.state;
+
         return (
             <div>
                 <div>
                     <h1>
                         Reset Password
                     </h1>
+                    <div>
+                        <span className="success-msg">
+                            {msg}
+                        </span>
+                    </div>
                     <div>
                         <label>Old Password:</label>
                     </div>
