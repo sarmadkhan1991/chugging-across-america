@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import {getBrewery} from '../../Redux/tripReducer';
 import './Map.css';
 
 const brewery = require('./beer_wheels.png');
@@ -43,7 +45,7 @@ export class Map extends Component {
     directionsRenderer.setMap(map);
     this.setMarkers(map);
   }
-  
+
   setMarkers = (map) => {
     for (let i = 0; i < this.props.cities.length; i++ ){
       let marker = new window.google.maps.Marker({
@@ -60,10 +62,19 @@ export class Map extends Component {
       anchor: new window.google.maps.Point(25,25)
     }
     
-    
+    let mappedBreweries = this.props.breweries.map(brew => {
+      return (
+          `<div key=${brew.locId}>`+
+            `<img src=${brew.logo} />`+
+            `<div>${brew.name}</div>`+
+            `<div>${brew.address.streetAddress}, ${brew.address.city}, ${brew.address.state}, ${brew.address.zip}</div>`+
+          `</div>`
+      )
+    });
+
     for (let i = 0; i < this.props.breweries.length; i++ ){
       let infowindow = new window.google.maps.InfoWindow({
-        content: this.props.breweries[i].name
+        content: mappedBreweries[i]
       })
       
       let marker = new window.google.maps.Marker({
@@ -101,4 +112,4 @@ function mapReduxStateToProps(reduxState) {
   return reduxState;
 }
 
-export default connect(mapReduxStateToProps) (Map);
+export default connect(mapReduxStateToProps, {getBrewery}) (Map);

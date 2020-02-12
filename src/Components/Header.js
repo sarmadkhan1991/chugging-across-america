@@ -19,8 +19,9 @@ class Header extends Component {
 
     componentDidMount() {
         axios
-        .get('api/auth/userSession')
+        .get('/api/auth/userSession')
         .then(res => {
+            console.log(res.data)
             this.setState( {
                 user: res.data
             })
