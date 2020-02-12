@@ -8,6 +8,8 @@ header {
   align-items: center;
   justify-content: space-between;
   font-weight: 600;
+  position: relative;
+  z-index: 5;
 }
 
 footer {
@@ -37,14 +39,34 @@ main {
   margin: auto;
 }
 
-button {
+h1 {
+  font-weight: 700px;
+  font-size: large;
+}
+
+button, .react-link {
   cursor: pointer;
+}
+
+.react-link {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.react-link:hover {
+  color: #dea429;
+}
+
+.link-container {
+  padding: 10px;
+  line-height: 25pt;
 }
 
 .login-container {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  z-index: 4;
 }
 
 .weather-container {
@@ -58,3 +80,45 @@ button {
 .clear-float {
   clear: both;
 }
+
+.hamburger-icon {
+  /* display: none; */
+  color: #fff;
+}
+
+.hamburger-icon:hover {
+  color: #dea429;
+}
+
+.hamburger-menu, .hamburger-menu-open, .hamburger-menu-close {
+  max-width: 50vw;
+  background-color: #000;
+  color: #fff;
+  display: none;
+}
+
+.hamburger-menu-open {
+  display: block;
+  animation: open 1s forwards;
+  position: absolute;
+}
+
+.hamburger-menu-close {
+  display: block;
+  animation: close 2s forwards;
+  position: absolute;
+}
+
+@keyframes open {
+  0% {
+      transform: translateY(-100vh);
+  }
+}
+
+@keyframes close {
+  100% {
+      transform: translateY(-100vh);
+  }
+}
+
+
