@@ -77,6 +77,10 @@ button, .react-link {
   text-align: center;
 }
 
+.success-msg {
+  color: green;
+}
+
 .clear-float {
   clear: both;
 }
