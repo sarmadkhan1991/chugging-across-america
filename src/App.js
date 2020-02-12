@@ -1,5 +1,4 @@
 import React from 'react';
-import Weather from "./Components/Weather/Weather"
 
 import './App.css';
 import routes from './routes';

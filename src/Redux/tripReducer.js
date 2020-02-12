@@ -45,7 +45,10 @@ export default function reducer (state = initialState, action) {
             if (state.breweries) {
                 let breweries = state.breweries;
                 action.payload.forEach(brew => {
-                    return breweries.push(brew);
+                    if (breweries.includes(brew.locId)){
+                        return;
+                    }
+                    breweries.push(brew);
                 });
                 return {
                     ...state,

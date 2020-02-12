@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {getBrewery} from '../../Redux/tripReducer';
+import {getBrewery, addBreweriesToTrip} from '../../Redux/tripReducer';
 import './Map.css';
-import axios from 'axios';
 
 const brewery = require('./beer_wheels.png');
 
@@ -17,15 +16,6 @@ export class Map extends Component {
 
   componentDidMount() {
     this.renderMap();
-    axios
-      .post(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.props.cities[0].name}&destinations=${this.props.cities[1].name}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
-      .then(res => {
-        this.setState({
-          distance: res.data.rows[0].elements[0].distance.text,
-          duration: res.data.rows[0].elements[0].duration.text
-        })
-      })
-      .catch(e => console.log(e));
   }
 
   renderMap = () => {
@@ -54,7 +44,6 @@ export class Map extends Component {
       if (status === 'OK') {
         directionsRenderer.setDirections(result);
       }
-      console.log(result)
     });
 
     directionsRenderer.setMap(map);
@@ -63,7 +52,7 @@ export class Map extends Component {
 
   setMarkers = (map) => {
     for (let i = 0; i < this.props.cities.length; i++ ){
-      let marker = new window.google.maps.Marker({
+      new window.google.maps.Marker({
         position: {lat: this.props.cities[i].lat, lng: this.props.cities[i].lng},
         map: map,
         title: this.props.cities[i].name
@@ -112,10 +101,6 @@ export class Map extends Component {
     return (
       <div>
         <div id="map" />
-        <div>
-          <h1>Distance: {this.state.distance}</h1>
-          <h1>Duration: {this.state.duration}</h1>
-        </div>
       </div>
     )
   }
@@ -134,4 +119,4 @@ function mapReduxStateToProps(reduxState) {
   return reduxState;
 }
 
-export default connect(mapReduxStateToProps, {getBrewery}) (Map);
+export default connect(mapReduxStateToProps, {getBrewery, addBreweriesToTrip}) (Map);

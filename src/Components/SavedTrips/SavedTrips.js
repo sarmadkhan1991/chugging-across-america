@@ -25,9 +25,9 @@ class SavedTrips extends React.Component {
             let isNotComplete = [];
            reports.map(r => {
                if(r.completed === true) {
-                   isComplete.push(r)
+                   return isComplete.push(r)
                } else {
-                   isNotComplete.push(r)
+                   return isNotComplete.push(r)
                }
            })
            this.setState({
