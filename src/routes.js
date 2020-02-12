@@ -6,6 +6,7 @@ import CreateTrip from './Components/CreateTrip/CreateTrip';
 import Trip from './Components/Trip/Trip';
 import Home from './Components/Home/Home';
 import SavedTrips from "./Components/SavedTrips/SavedTrips";
+import ResetPassword from './Components/ResetPassword';
 
 
 export default (
@@ -18,5 +19,6 @@ export default (
         <Route component={CreateTrip} path='/create' />
         <Route component={Trip} path='/trip'/>
         <Route component={SavedTrips} path='/user/trips'/>
+        <Route component={ResetPassword} path='/user/profile' />
     </Switch>
 )
