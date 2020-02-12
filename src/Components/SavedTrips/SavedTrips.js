@@ -7,16 +7,22 @@ class SavedTrips extends React.Component {
         super();
         this.state = {
             incomplete:[],
-            complete:[]
+            complete:[],
+            toggle: true
         }
         this.getSavedTrips = this.getSavedTrips.bind(this);
-        
+        this.checkbox = this.checkbox.bind(this);
+        this.unCheckbox = this.unCheckbox.bind(this);
     }
 
     componentDidMount() {
         this.getSavedTrips();
     }
 
+    toggleTripCompletion() {
+
+        
+    }
     
     getSavedTrips() {
         axios.get("/user/trips").then(res => {
@@ -39,6 +45,19 @@ class SavedTrips extends React.Component {
         
     }
 
+    checkbox(id) {
+        axios.put("/user/trips", {value: true, id}).then(() => {
+            this.getSavedTrips();
+        })
+    }
+
+    unCheckbox(id) {
+        axios.put("/user/trips", {value: false, id}).then(() => {
+            this.getSavedTrips();
+        })
+    }
+
+   
 
 
   
@@ -50,7 +69,7 @@ class SavedTrips extends React.Component {
                 <div key={trip.id}>
                     <div>{trip.starting_city}</div>
                     <div>{trip.ending_city}</div>
-                    Completed:<button>{trip.completed.toString()}</button>
+                    Completed:<input onChange={() =>this.checkbox(trip.id)} type="checkbox" value={trip.completed}/>
                 </div>
             )
         });
@@ -59,7 +78,7 @@ class SavedTrips extends React.Component {
                 <div key={trip.id}>
                 <div>{trip.starting_city}</div>
                 <div>{trip.ending_city}</div>
-                Completed:<button>{trip.completed.toString()}</button>
+                Completed: <input onChange={() => this.unCheckbox(trip.id)} type="checkbox" value={trip.completed} defaultChecked/>
             </div>
             )
         })

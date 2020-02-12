@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+import Nav from "./Nav/Nav"
+
 class Header extends Component {
     constructor() {
     super();
@@ -45,7 +47,7 @@ class Header extends Component {
     register() {
         const { username, password } = this.state;
         axios
-        .post('api/auth/register', {username, password})
+        .post('/api/auth/register', {username, password})
         .then(user => {
             this.setState( {
             username: '',
@@ -64,7 +66,7 @@ class Header extends Component {
     login() {
     const { username, password } = this.state;
     axios
-    .post("api/auth/login", {username, password})
+    .post("/api/auth/login", {username, password})
     .then(user => {
         this.updateUser(user.data);
     }) 
@@ -72,7 +74,7 @@ class Header extends Component {
     }
     logout() {
     axios
-    .post("api/auth/logout")
+    .post("/api/auth/logout")
     .then(() => {
         this.updateUser({});
     })
@@ -91,9 +93,10 @@ class Header extends Component {
                         (
                             <div>
                                 Cheers, {user.username} | 
-                                <button onClick={this.logout}>
+                                {/* <button onClick={this.logout}>
                                     Logout
-                                </button>
+                                </button> */}
+                                <Nav logoutFn={this.logout} />
                             </div>
                         ):
                         (
