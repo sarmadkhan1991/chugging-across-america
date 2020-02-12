@@ -51,5 +51,16 @@ module.exports = {
         const hash = bcrypt.hashSync(confirmPassword, salt);
         await db.update_password(hash, id);
         return res.status(200).send("Your password has been reset.")
+    },
+    verifyPassword: async (req, res, next) => {
+        const { oldPassword } = req.body;
+        console.log(req.session.user.username);
+        const foundUser = await req.app.get("db").get_user([req.session.user.username]);
+        const user = foundUser[0];
+        const pwdConfirmed = bcrypt.compareSync(oldPassword, user.hash);
+        if (!pwdConfirmed) {
+            return res.status(401).send("Incorrect password.");
+        }
+        return res.sendStatus(200);
     }
 };

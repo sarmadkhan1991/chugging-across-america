@@ -28,6 +28,7 @@ app.post('/api/auth/register', authCtrl.register);
 app.post('/api/auth/login', authCtrl.login);
 app.post('/api/auth/logout', authCtrl.logout);
 app.put('/api/auth/updatePassword', auth.usersOnly, authCtrl.updatePassword);
+app.put('/api/auth/verifyPassword', auth.usersOnly, authCtrl.verifyPassword);
 
 app.get('/user/trips', auth.usersOnly, tripCtrl.getTrips);
 app.put('/user/trips', auth.usersOnly, tripCtrl.completedTrip)
