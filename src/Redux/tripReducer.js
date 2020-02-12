@@ -42,9 +42,20 @@ export function getBrewery(brewery) {
 export default function reducer (state = initialState, action) {
     switch (action.type) {
         case ADD_BREWERIES:
-            return {
-                ...state,
-                breweries: action.payload
+            if (state.breweries) {
+                let breweries = state.breweries;
+                action.payload.forEach(brew => {
+                    return breweries.push(brew);
+                });
+                return {
+                    ...state,
+                    breweries: breweries
+                }
+            } else {
+                return {
+                    ...state,
+                    breweries: action.payload
+                }
             }
         case ADD_CITIES:
             return {
