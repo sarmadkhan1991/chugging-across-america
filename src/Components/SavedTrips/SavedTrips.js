@@ -7,8 +7,7 @@ class SavedTrips extends React.Component {
         super();
         this.state = {
             incomplete:[],
-            complete:[],
-            toggle: true
+            complete:[]
         }
         this.getSavedTrips = this.getSavedTrips.bind(this);
         this.checkbox = this.checkbox.bind(this);
@@ -19,11 +18,7 @@ class SavedTrips extends React.Component {
         this.getSavedTrips();
     }
 
-    toggleTripCompletion() {
-
-        
-    }
-    
+   
     getSavedTrips() {
         axios.get("/user/trips").then(res => {
             const reports = res.data;
@@ -86,14 +81,19 @@ class SavedTrips extends React.Component {
         
         return(
             <div>
+                {this.state.complete.length > 1 || this.state.incomplete.length > 1 ?
                 <div>
-                    <h1>Current Trips:</h1>
-                    {incompleteTrips}
+                    <div>
+                        <h1>Current Trips:</h1>
+                        {incompleteTrips}
+                    </div>
+                    <div>
+                        <h1>Completed Trips:</h1>
+                        {completedTrips}
+                    </div>
                 </div>
-                <div>
-                    <h1>Completed Trips:</h1>
-                    {completedTrips}
-                </div>
+                : <div>No Trips To Display</div>
+                }
             </div>
         )
     }
