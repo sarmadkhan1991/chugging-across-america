@@ -50,6 +50,43 @@ class CreateTrip extends React.Component {
       })
       .catch(e => console.log(e));
       
+      await axios.get(`https://sandbox-api.brewerydb.com/v2/search/geo/point?lat=${cities[0].lat}&lng=${cities[0].lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
+      .then(res => {
+        if (res.data.data){
+          const breweries = res.data.data;
+          const breweriesOpenToPublic = breweries.filter(brew => {
+            if (brew.openToPublic === 'Y') {
+              return brew
+            }
+          });
+          const breweryInfo = breweriesOpenToPublic.map(brew => {
+            const {id, breweryId, phone, website, hoursOfOperationExplicit, latitude, longitude, streetAddress, locality, region, postalCode} = brew;
+            const brewery = {
+              locId: id,
+              breweryId: breweryId,
+              name: brew.brewery.name,
+              address: {
+                streetAddress: streetAddress,
+                city: locality,
+                state: region,
+                zip: postalCode
+              },
+              logo: brew.brewery.images.icon,
+              phone: phone,
+              website: website,
+              hoursOfOperation: hoursOfOperationExplicit,
+              lat: latitude,
+              lng: longitude,
+            }
+            return brewery
+          })
+          this.props.addBreweriesToTrip(breweryInfo);
+        } else {
+          this.props.addBreweriesToTrip([]);
+        }
+      })
+      .catch(e => console.log(e));
+      
       await axios.get(`https://sandbox-api.brewerydb.com/v2/search/geo/point?lat=${cities[1].lat}&lng=${cities[1].lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
              .then(res => {
             if (res.data.data){
@@ -84,13 +121,13 @@ class CreateTrip extends React.Component {
             } else {
               this.props.addBreweriesToTrip([]);
             }
+          })
+          .catch(e => console.log(e));
+          
+        this.props.addCitiesToTrip(cities);
+        this.setState({
+          redirect: true
         })
-        .catch(e => console.log(e));
-
-    this.props.addCitiesToTrip(cities);
-    this.setState({
-      redirect: true
-    })
   }
   
   render() {
