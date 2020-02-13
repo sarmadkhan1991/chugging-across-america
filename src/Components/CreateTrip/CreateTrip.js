@@ -16,7 +16,8 @@ class CreateTrip extends React.Component {
     this.state = {
       startCity: "",
       endCity: "",
-      redirect: false
+      redirect: false,
+      steps: []
     }
   }
 
@@ -30,7 +31,7 @@ class CreateTrip extends React.Component {
   submitHandler = async () => {
     let cities = [];
     await axios
-      .get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.startCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
+      .get(`/maps/api/geocode/json?address=${this.state.startCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
       .then(res => {
         cities.push({
           name: res.data.results[0].address_components[0].long_name,
@@ -40,7 +41,7 @@ class CreateTrip extends React.Component {
       })
       .catch(e => console.log(e));
     await axios
-      .get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.endCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
+      .get(`/maps/api/geocode/json?address=${this.state.endCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
       .then(res => {
         cities.push({
           name: res.data.results[0].address_components[0].long_name,
@@ -50,7 +51,7 @@ class CreateTrip extends React.Component {
       })
       .catch(e => console.log(e));
       
-      await axios.get(`https://sandbox-api.brewerydb.com/v2/search/geo/point?lat=${cities[0].lat}&lng=${cities[0].lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
+      await axios.get(`/v2/search/geo/point?lat=${cities[0].lat}&lng=${cities[0].lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
       .then(res => {
         if (res.data.data){
           const breweries = res.data.data;
@@ -58,6 +59,7 @@ class CreateTrip extends React.Component {
             if (brew.openToPublic === 'Y') {
               return brew
             }
+            return null;
           });
           const breweryInfo = breweriesOpenToPublic.map(brew => {
             const {id, breweryId, phone, website, hoursOfOperationExplicit, latitude, longitude, streetAddress, locality, region, postalCode} = brew;
@@ -86,8 +88,72 @@ class CreateTrip extends React.Component {
         }
       })
       .catch(e => console.log(e));
+
+      // ************************************************************************************
       
-      await axios.get(`https://sandbox-api.brewerydb.com/v2/search/geo/point?lat=${cities[1].lat}&lng=${cities[1].lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
+      await axios.post(`/maps/api/directions/json?origin=${cities[0].name}&destination=${cities[1].name}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
+              .then(res => {
+                const { steps } = res.data.routes[0].legs[0];
+                const filteredSteps = steps.filter(step => {
+                  return step.distance.value > 160000;
+                });
+                filteredSteps.unshift(steps[0]);
+                filteredSteps.push(steps[steps.length - 1]);
+                this.setState({
+                  steps: filteredSteps
+                });
+              })
+              .catch(e => console.log(e));
+
+      this.state.steps.forEach(async step => {
+        await axios.get(`/v2/search/geo/point?lat=${step.end_location.lat}&lng=${step.end_location.lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
+          .then(res => {
+            if (res.data.data){
+              const breweries = res.data.data;
+              const breweriesOpenToPublic = breweries.filter(brew => {
+                if (brew.openToPublic === 'Y') {
+                  return brew
+                }
+                return null;
+              });
+              
+              const breweryInfo = breweriesOpenToPublic.map(brew => {
+                const {id, breweryId, phone, website, hoursOfOperationExplicit, latitude, longitude, streetAddress, locality, region, postalCode} = brew;
+                const brewery = {
+                  locId: id,
+                  breweryId: breweryId,
+                  name: brew.brewery.name,
+                  address: {
+                    streetAddress: streetAddress,
+                    city: locality,
+                    state: region,
+                    zip: postalCode
+                  },
+                  logo: brew.brewery.images.icon,
+                  phone: phone,
+                  website: website,
+                  hoursOfOperation: hoursOfOperationExplicit,
+                  lat: latitude,
+                  lng: longitude,
+                }
+                return brewery
+              })
+              this.props.addBreweriesToTrip(breweryInfo);
+            } else {
+              this.props.addBreweriesToTrip([]);
+            }
+          })
+          .catch(e => console.log(e));
+      })
+      
+      
+      
+      
+      
+      
+      // ************************************************************************************
+      
+      await axios.get(`/v2/search/geo/point?lat=${cities[1].lat}&lng=${cities[1].lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
              .then(res => {
             if (res.data.data){
               const breweries = res.data.data;
@@ -95,6 +161,7 @@ class CreateTrip extends React.Component {
                   if (brew.openToPublic === 'Y') {
                       return brew
                   }
+                  return null;
               });
               const breweryInfo = breweriesOpenToPublic.map(brew => {
                   const {id, breweryId, phone, website, hoursOfOperationExplicit, latitude, longitude, streetAddress, locality, region, postalCode} = brew;
@@ -121,17 +188,18 @@ class CreateTrip extends React.Component {
             } else {
               this.props.addBreweriesToTrip([]);
             }
+            this.props.addCitiesToTrip(cities);
+            this.setState({
+              redirect: true
+            })
           })
           .catch(e => console.log(e));
           
-        this.props.addCitiesToTrip(cities);
-        this.setState({
-          redirect: true
-        })
   }
   
   render() {
-    if(this.state.redirect) {
+    console.log(this.state);
+    if(this.state.redirect === true) {
       return <Redirect to='/trip' />
     }
 
