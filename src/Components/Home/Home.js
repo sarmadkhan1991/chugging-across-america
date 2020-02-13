@@ -14,7 +14,6 @@ function Home() {
         <h1>Welcome.</h1>
         <h2>Start chugging</h2>
         <CreateTrip />
-        <Link to='/user/trips'>Trip</Link>
     </div>
   );
 }
