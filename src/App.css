@@ -7,8 +7,6 @@ header {
   align-items: center;
   justify-content: space-between;
   font-weight: 600;
-  /* position: relative; */
-  z-index: 5;
 }
 
 footer, .weather-container {
@@ -42,6 +40,17 @@ main {
 h1 {
   font-weight: 700px;
   font-size: large;
+}
+
+button {
+  background-color: #dea429;
+  border-radius: 3px;
+  border-color: #fff;
+  margin-left: 10px;
+}
+
+header > button {
+
 }
 
 button, .react-link {
