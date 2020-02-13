@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-import Nav from "./Nav/Nav"
+import Nav from "../Nav/Nav"
 
 class Header extends Component {
     constructor() {
