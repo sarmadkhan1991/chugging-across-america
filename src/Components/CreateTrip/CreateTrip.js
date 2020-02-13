@@ -31,7 +31,7 @@ class CreateTrip extends React.Component {
   submitHandler = async () => {
     let cities = [];
     await axios
-      .get(`/maps/api/geocode/json?address=${this.state.startCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
+      .get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.startCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
       .then(res => {
         cities.push({
           name: res.data.results[0].address_components[0].long_name,
@@ -41,7 +41,7 @@ class CreateTrip extends React.Component {
       })
       .catch(e => console.log(e));
     await axios
-      .get(`/maps/api/geocode/json?address=${this.state.endCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
+      .get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.endCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
       .then(res => {
         cities.push({
           name: res.data.results[0].address_components[0].long_name,
@@ -91,7 +91,7 @@ class CreateTrip extends React.Component {
 
       // ************************************************************************************
       
-      await axios.post(`/maps/api/directions/json?origin=${cities[0].name}&destination=${cities[1].name}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
+      await axios.post(`https://maps.googleapis.com/maps/api/directions/json?origin=${cities[0].name}&destination=${cities[1].name}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
               .then(res => {
                 const { steps } = res.data.routes[0].legs[0];
                 const filteredSteps = steps.filter(step => {
@@ -198,7 +198,6 @@ class CreateTrip extends React.Component {
   }
   
   render() {
-    console.log(this.state);
     if(this.state.redirect === true) {
       return <Redirect to='/trip' />
     }
@@ -213,20 +212,24 @@ class CreateTrip extends React.Component {
             }}
           >
             <input
+              data-testid="start-city"
               type="text"
               required
               name="startCity"
               placeholder="Start"
               onChange={e => this.changeHandler(e.target.name, e.target.value)}
+              className="start-city"
             />
             <input
+              data-testid="end-city"
               type="text"
               required
               name="endCity"
               placeholder="End"
               onChange={e => this.changeHandler(e.target.name, e.target.value)}
+              className="end-city"
             />
-            <button type="submit">Find Beer</button>
+            <button type="submit" className="submit">Find Beer</button>
           </form>
       </div>
     );

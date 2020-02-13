@@ -8,22 +8,22 @@ module.exports = function (app) {
         })
     );
 
-    app.use(
-        proxy("/maps", {
-            target:"https://maps.googleapis.com",
-            changeOrigin: true
-        })
-    );
+    // app.use(
+    //     proxy("/maps", {
+    //         target:"https://maps.googleapis.com",
+    //         changeOrigin: true
+    //     })
+    // );
 
     app.use(
         proxy("/api", {
-            target:"http://localhost:4000"
+            target:"http://localhost:3500"
         })
     );
 
     app.use(
         proxy("/user", {
-            target:"http://localhost:4000"
+            target:"http://localhost:3500"
         })
     );
 }
