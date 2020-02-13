@@ -3,9 +3,9 @@ import axios from 'axios';
 import { connect } from "react-redux";
 
 
-class SaveTripButton extends React.Component {
+export class SaveTripButton extends React.Component {
     constructor(props){
-        super();
+        super(props);
         this.addToTrips = this.addToTrips.bind(this);
     }
 
@@ -24,13 +24,14 @@ addToTrips() {
     render() {
         return (
             <div>
-                <button onClick={this.addToTrips}>Save Trip</button>
+                <button className='btn' onClick={this.addToTrips}>Save Trip</button>
             </div>
         )
     }
 }
 
 const mapStateToProps = state => {
+    console.log(state)
     return state
     
 }
