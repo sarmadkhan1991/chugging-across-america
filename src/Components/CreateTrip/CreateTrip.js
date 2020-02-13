@@ -91,7 +91,7 @@ class CreateTrip extends React.Component {
 
       // ************************************************************************************
       
-      await axios.post(`https://maps.googleapis.com/maps/api/directions/json?origin=${cities[0].name}&destination=${cities[1].name}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
+      await axios.post(`/maps/api/directions/json?origin=${cities[0].name}&destination=${cities[1].name}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
               .then(res => {
                 const { steps } = res.data.routes[0].legs[0];
                 const filteredSteps = steps.filter(step => {
