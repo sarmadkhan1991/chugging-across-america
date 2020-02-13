@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 import Rating from '../Rating/Rating';
 
 
-class Breweries extends Component {
+export class Breweries extends Component {
     constructor(props) {
         super (props)
 

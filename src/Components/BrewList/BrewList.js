@@ -38,6 +38,7 @@ class BrewList extends React.Component {
 
   }
   render() {
+    console.log(this.props.breweries);
     return (
       <div>
         {this.state.breweries}
