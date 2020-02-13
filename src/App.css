@@ -8,7 +8,7 @@ header {
   align-items: center;
   justify-content: space-between;
   font-weight: 600;
-  position: relative;
+  /* position: relative; */
   z-index: 5;
 }
 
@@ -54,7 +54,7 @@ button, .react-link {
 }
 
 .react-link:hover {
-  color: #dea429;
+  color: #5b5b5b;
 }
 
 .link-container {
@@ -79,7 +79,9 @@ button, .react-link {
 
 .success-msg {
   color: green;
+  line-height: 36pt;
 }
+
 
 .clear-float {
   clear: both;
@@ -96,7 +98,8 @@ button, .react-link {
 
 .hamburger-menu, .hamburger-menu-open, .hamburger-menu-close {
   max-width: 50vw;
-  background-color: #000;
+  background-color: #dea429;
+  opacity: 75%;
   color: #fff;
   display: none;
 }
@@ -115,7 +118,7 @@ button, .react-link {
 
 @keyframes open {
   0% {
-      transform: translateY(-100vh);
+      transform: translateY(-150vh);
   }
 }
 
