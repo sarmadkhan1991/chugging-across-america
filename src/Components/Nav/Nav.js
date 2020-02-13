@@ -24,7 +24,7 @@ class Nav extends Component {
         return (
             <div>
                 <GiHamburgerMenu className="hamburger-icon" size={36} onClick={this.toggleMenu} />
-                <menu className={this.state.menuStatus}>
+                <menu className={this.state.menuStatus} onClick={this.toggleMenu}>
                     <div className="link-container">
                         <div>
                             <Link to="/" className="react-link">

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-import Nav from "./Nav/Nav"
+import Nav from "../Nav/Nav"
 
 class Header extends Component {
     constructor() {
@@ -92,7 +92,7 @@ class Header extends Component {
                     {user.username ?
                         (
                             <div>
-                                Cheers, {user.username} | 
+                                Cheers, {user.username} 
                                 {/* <button onClick={this.logout}>
                                     Logout
                                 </button> */}
@@ -102,13 +102,13 @@ class Header extends Component {
                         (
                             <div className="login-container">
                                 <div>
-                                    <input type="text" placeholder="Enter username" value={username} onChange={e => this.handleUsernameInput(e.target.value)}></input>
+                                    <input className="username-input" type="text" placeholder="Enter username" value={username} onChange={e => this.handleUsernameInput(e.target.value)}></input>
                                 </div>
                                 <div>
-                                    <input type="password" placeholder="Enter password" value={password} onChange={e => this.handlePasswordInput(e.target.value)}></input>
+                                    <input className="password-input"  type="password" placeholder="Enter password" value={password} onChange={e => this.handlePasswordInput(e.target.value)}></input>
                                 </div>
                                 <div>
-                                    <button onClick={this.login}>
+                                    <button className="login-button" onClick={this.login}>
                                         Login
                                     </button>
                                     <button onClick={this.register}>

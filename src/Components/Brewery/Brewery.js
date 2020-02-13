@@ -16,7 +16,7 @@ class Breweries extends Component {
     }
 
     componentDidMount () {
-        axios.get(`https://sandbox-api.brewerydb.com/v2//brewery/${this.props.trip.currentBrewery.breweryId}/beers?key=${process.env.REACT_APP_BREWERIES_API_KEY}`
+        axios.get(`/v2/brewery/${this.props.trip.currentBrewery.breweryId}/beers?key=${process.env.REACT_APP_BREWERIES_API_KEY}`
             ).then(res => {
                 const beers = res.data.data;
                 const currentBeers = beers.filter(beer => {
@@ -51,12 +51,12 @@ class Breweries extends Component {
             )
         })
         return (
-            <div>
+            <div className='brewery-component'>
                 <Link to='/trip'>
                     <div>Back to trip</div>
                 </Link>
-                <h1>Brewery:</h1>
-                    <div>name: {currentBrewery.name}</div>
+                <h1>Breweryname:</h1>
+                    <div>{currentBrewery.name}</div>
                     <div>address: {currentBrewery.address.streetAddress}, {currentBrewery.address.city}, {currentBrewery.address.state}, {currentBrewery.address.zip}</div>
                     <Rating />
                 <h1>beer list:</h1>
