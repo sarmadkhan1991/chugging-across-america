@@ -31,7 +31,7 @@ class CreateTrip extends React.Component {
   submitHandler = async () => {
     let cities = [];
     await axios
-      .get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.startCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
+      .get(`/maps/api/geocode/json?address=${this.state.startCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
       .then(res => {
         cities.push({
           name: res.data.results[0].address_components[0].long_name,
@@ -41,7 +41,7 @@ class CreateTrip extends React.Component {
       })
       .catch(e => console.log(e));
     await axios
-      .get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.endCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
+      .get(`/maps/api/geocode/json?address=${this.state.endCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
       .then(res => {
         cities.push({
           name: res.data.results[0].address_components[0].long_name,
@@ -51,7 +51,7 @@ class CreateTrip extends React.Component {
       })
       .catch(e => console.log(e));
       
-      await axios.get(`https://sandbox-api.brewerydb.com/v2/search/geo/point?lat=${cities[0].lat}&lng=${cities[0].lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
+      await axios.get(`/v2/search/geo/point?lat=${cities[0].lat}&lng=${cities[0].lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
       .then(res => {
         if (res.data.data){
           const breweries = res.data.data;
@@ -91,12 +91,14 @@ class CreateTrip extends React.Component {
 
       // ************************************************************************************
       
-      await axios.post(`https://maps.googleapis.com/maps/api/directions/json?origin=${cities[0].name}&destination=${cities[1].name}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
+      await axios.post(`/maps/api/directions/json?origin=${cities[0].name}&destination=${cities[1].name}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
               .then(res => {
                 const { steps } = res.data.routes[0].legs[0];
                 const filteredSteps = steps.filter(step => {
                   return step.distance.value > 160000;
                 });
+                filteredSteps.unshift(steps[0]);
+                filteredSteps.push(steps[steps.length - 1]);
                 this.setState({
                   steps: filteredSteps
                 });
@@ -104,7 +106,7 @@ class CreateTrip extends React.Component {
               .catch(e => console.log(e));
 
       this.state.steps.forEach(async step => {
-        await axios.get(`https://sandbox-api.brewerydb.com/v2/search/geo/point?lat=${step.end_location.lat}&lng=${step.end_location.lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
+        await axios.get(`/v2/search/geo/point?lat=${step.end_location.lat}&lng=${step.end_location.lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
           .then(res => {
             if (res.data.data){
               const breweries = res.data.data;
@@ -151,7 +153,7 @@ class CreateTrip extends React.Component {
       
       // ************************************************************************************
       
-      await axios.get(`https://sandbox-api.brewerydb.com/v2/search/geo/point?lat=${cities[1].lat}&lng=${cities[1].lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
+      await axios.get(`/v2/search/geo/point?lat=${cities[1].lat}&lng=${cities[1].lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
              .then(res => {
             if (res.data.data){
               const breweries = res.data.data;
@@ -196,7 +198,7 @@ class CreateTrip extends React.Component {
   }
   
   render() {
-    if(this.state.redirect) {
+    if(this.state.redirect === true) {
       return <Redirect to='/trip' />
     }
 
@@ -210,20 +212,24 @@ class CreateTrip extends React.Component {
             }}
           >
             <input
+              data-testid="start-city"
               type="text"
               required
               name="startCity"
               placeholder="Start"
               onChange={e => this.changeHandler(e.target.name, e.target.value)}
+              className="start-city"
             />
             <input
+              data-testid="end-city"
               type="text"
               required
               name="endCity"
               placeholder="End"
               onChange={e => this.changeHandler(e.target.name, e.target.value)}
+              className="end-city"
             />
-            <button type="submit">Find Beer</button>
+            <button type="submit" className="submit">Find Beer</button>
           </form>
       </div>
     );
