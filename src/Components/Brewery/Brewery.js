@@ -33,8 +33,6 @@ export class Breweries extends Component {
     }
 
     render () {
-        console.log(this.props);
-        console.log(this.state.beers);
         const {currentBrewery} = this.props.trip
         const {beers} = this.state;
         const mappedBeers = beers.map(beer => {
@@ -57,9 +55,8 @@ export class Breweries extends Component {
                 <Link to='/trip'>
                     <div>Back to trip</div>
                 </Link>
-                <h1>Breweryname:</h1>
                     <div>{currentBrewery.name}</div>
-                    <div>address: {currentBrewery.address.streetAddress}, {currentBrewery.address.city}, {currentBrewery.address.state}, {currentBrewery.address.zip}</div>
+                    <div>{currentBrewery.address.streetAddress},<br/> {currentBrewery.address.city}, {currentBrewery.address.state}, {currentBrewery.address.zip}</div>
                     <Rating />
                 <h1>beer list:</h1>
                 {mappedBeers}
