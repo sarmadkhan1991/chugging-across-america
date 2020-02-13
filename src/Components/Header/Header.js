@@ -110,7 +110,7 @@ class Header extends Component {
                                 <div>
                                     <button className="login-button" onClick={this.login}>
                                         Login
-                                    </button>
+                                    </button> 
                                     <button onClick={this.register}>
                                         Register
                                     </button>
