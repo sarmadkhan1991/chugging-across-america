@@ -85,7 +85,7 @@ class SavedTrips extends React.Component {
 
         
         return(
-            <div>
+            <div className="saved-trips">
                 <div>
                     <h1>Current Trips:</h1>
                     {incompleteTrips}

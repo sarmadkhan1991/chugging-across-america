@@ -42,15 +42,14 @@ h1 {
   font-size: large;
 }
 
+input {
+  margin-right: 2px;
+}
+
 button {
   background-color: #dea429;
   border-radius: 3px;
   border-color: #fff;
-  margin-left: 10px;
-}
-
-header > button {
-
 }
 
 button, .react-link {
@@ -98,6 +97,12 @@ button, .react-link {
   float: left;
   font-size: 9pt;
   padding: 2px;
+}
+
+.saved-trips {
+  min-height: calc(100vh - 40vh);
+  display: flex;
+  align-items: baseline;
 }
 
 .success-msg {
