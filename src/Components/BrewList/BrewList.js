@@ -14,13 +14,18 @@ class BrewList extends React.Component {
 
   componentDidMount() {
     if (this.props.breweries.length > 0){
-      const mappedBreweries = this.props.breweries.map(brew => {
+      
+      const filtered = Array.from(new Set(this.props.breweries.map(a => a.locId))).map(locId => {
+        return this.props.breweries.find(a => a.locId === locId)
+      })
+
+      const mappedBreweries = filtered.map(brew => {
           return (
               <div key={brew.locId}>
                   <Link to='/brewery' >
-                      <div onClick={() => this.props.getBrewery(brew)}>name: {brew.name}</div>
+                      <div onClick={() => this.props.getBrewery(brew)}>{brew.name}</div>
                   </Link>
-                  <div>address: {brew.address.streetAddress}, {brew.address.city}, {brew.address.state}, {brew.address.zip}</div>
+                  <div>{brew.address.streetAddress}, {brew.address.city}, {brew.address.state}, {brew.address.zip}</div>
                   <div>hours of Operation: {}</div>
               </div>
               )
