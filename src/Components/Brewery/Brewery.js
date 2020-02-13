@@ -33,8 +33,6 @@ class Breweries extends Component {
     }
 
     render () {
-        console.log(this.props);
-        console.log(this.state.beers);
         const {currentBrewery} = this.props.trip
         const {beers} = this.state;
         const mappedBeers = beers.map(beer => {
