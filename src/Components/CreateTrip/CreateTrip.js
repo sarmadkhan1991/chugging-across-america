@@ -31,7 +31,7 @@ class CreateTrip extends React.Component {
   submitHandler = async () => {
     let cities = [];
     await axios
-      .get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.startCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
+      .get(`/maps/api/geocode/json?address=${this.state.startCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
       .then(res => {
         cities.push({
           name: res.data.results[0].address_components[0].long_name,
@@ -41,7 +41,7 @@ class CreateTrip extends React.Component {
       })
       .catch(e => console.log(e));
     await axios
-      .get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.endCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
+      .get(`/maps/api/geocode/json?address=${this.state.endCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
       .then(res => {
         cities.push({
           name: res.data.results[0].address_components[0].long_name,
