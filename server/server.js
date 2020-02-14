@@ -51,6 +51,11 @@ app.post('/api/breweries', async (req, res, next) => {
   const breweries = await axios.get(`https://sandbox-api.brewerydb.com/v2/search/geo/point?lat=${step.end_location.lat}&lng=${step.end_location.lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`);
   res.status(200).send(breweries.data.data);
 });
+app.post('/api/beers', async (req, res, next) => {
+  const { breweryId } = req.body;
+  const beers = await axios.get(`https://sandbox-api.brewerydb.com/v2/brewery/${breweryId}/beers?key=${process.env.REACT_APP_BREWERIES_API_KEY}`);
+  res.status(200).send(beers.data);
+})
 
 const path = require('path')
 app.get('*', (req, res)=>{
