@@ -7,6 +7,7 @@ const tripCtrl = require('./controllers/tripController');
 const authCtrl = require('./controllers/authController');
 const ratingCtrl = require('./controllers/ratingController');
 const auth = require('./middleware/authMiddleware');
+const axios = require('axios');
 
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING } = process.env;
 massive(CONNECTION_STRING).then(db => {
@@ -39,6 +40,22 @@ app.delete('/user/trip/:id', tripCtrl.deleteTrip);
 
 app.get('/api/rating/:id', ratingCtrl.getRatings);
 app.post('/api/rating/:id', ratingCtrl.addRating);
+
+app.post('/api/directions', async (req, res, next) => {
+  const {cities} = req.body;
+  const directions = await axios.post(`https://maps.googleapis.com/maps/api/directions/json?origin=${cities[0].name}&destination=${cities[1].name}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`).catch(e => console.log(e));
+  res.status(200).send(directions.data.routes[0].legs[0]);
+});
+app.post('/api/breweries', async (req, res, next) => {
+  const { step } = req.body;
+  const breweries = await axios.get(`https://sandbox-api.brewerydb.com/v2/search/geo/point?lat=${step.end_location.lat}&lng=${step.end_location.lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`);
+  res.status(200).send(breweries.data.data);
+});
+app.post('/api/beers', async (req, res, next) => {
+  const { breweryId } = req.body;
+  const beers = await axios.get(`https://sandbox-api.brewerydb.com/v2/brewery/${breweryId}/beers?key=${process.env.REACT_APP_BREWERIES_API_KEY}`);
+  res.status(200).send(beers.data);
+})
 
 const path = require('path')
 app.get('*', (req, res)=>{

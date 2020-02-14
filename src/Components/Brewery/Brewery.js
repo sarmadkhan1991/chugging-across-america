@@ -15,9 +15,12 @@ class Breweries extends Component {
         }
     }
 
-    componentDidMount () {
-        axios.get(`/v2/brewery/${this.props.trip.currentBrewery.breweryId}/beers?key=${process.env.REACT_APP_BREWERIES_API_KEY}`
-            ).then(res => {
+    async componentDidMount () {
+        const { breweryId } = this.props.trip.currentBrewery;
+        const res = await axios.post('/api/beers', { breweryId });
+        console.log(res)
+        // axios.get(`/v2/brewery/${this.props.trip.currentBrewery.breweryId}/beers?key=${process.env.REACT_APP_BREWERIES_API_KEY}`
+        //     ).then(res => {
                 const beers = res.data.data;
                 const currentBeers = beers.filter(beer => {
                     if (beer.isRetired === 'N'){
@@ -29,7 +32,7 @@ class Breweries extends Component {
                 this.setState({
                     beers: currentBeers
                 })
-            })
+        //     })
     }
 
     render () {

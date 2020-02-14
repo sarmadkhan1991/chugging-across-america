@@ -17,7 +17,8 @@ class CreateTrip extends React.Component {
       startCity: "",
       endCity: "",
       redirect: false,
-      steps: []
+      steps: [],
+      breweries: []
     }
   }
 
@@ -44,8 +45,10 @@ class CreateTrip extends React.Component {
     });
     this.props.addCitiesToTrip(cities);
     
-    const directionData = await axios.post(`/maps/api/directions/json?origin=${cities[0].name}&destination=${cities[1].name}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`);
-    const { steps } = directionData.data.routes[0].legs[0];
+    // const directionData = await axios.post(`/maps/api/directions/json?origin=${cities[0].name}&destination=${cities[1].name}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`);
+    // const { steps } = directionData.data.routes[0].legs[0];
+    const directions = await axios.post('/api/directions', {cities});
+    const { steps } = directions.data;
     const filteredSteps = steps.filter(step => {
       return step.distance.value > 160000;
     });
@@ -56,10 +59,11 @@ class CreateTrip extends React.Component {
     });
 
       this.state.steps.forEach(async (step, index) => {
-        await axios.get(`/v2/search/geo/point?lat=${step.end_location.lat}&lng=${step.end_location.lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
-          .then(res => {
-            if (res.data.data){
-              const breweries = res.data.data;
+        const res = await axios.post('/api/breweries', {step});
+        // await axios.get(`/v2/search/geo/point?lat=${step.end_location.lat}&lng=${step.end_location.lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
+        //   .then(res => {
+            if (res.data){
+              const breweries = res.data;
               const breweriesOpenToPublic = breweries.filter(brew => {
                 if (brew.openToPublic === 'Y') {
                   return brew
@@ -97,8 +101,8 @@ class CreateTrip extends React.Component {
                 redirect: true
               })
             }
-          })
-          .catch(e => console.log(e));
+        //   })
+        //   .catch(e => console.log(e));
       })  
   }
   
@@ -108,8 +112,8 @@ class CreateTrip extends React.Component {
     }
 
     return (
-      <div>
-          <h2>Enter two cities to start chugging:</h2>
+      <div id="create">
+          <h2 id="prompt">Enter two cities to begin:</h2>
           <form
             onSubmit={e => {
               e.preventDefault();
