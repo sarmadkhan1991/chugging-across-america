@@ -44,8 +44,10 @@ class CreateTrip extends React.Component {
     });
     this.props.addCitiesToTrip(cities);
     
-    const directionData = await axios.post(`/maps/api/directions/json?origin=${cities[0].name}&destination=${cities[1].name}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`);
-    const { steps } = directionData.data.routes[0].legs[0];
+    // const directionData = await axios.post(`/maps/api/directions/json?origin=${cities[0].name}&destination=${cities[1].name}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`);
+    // const { steps } = directionData.data.routes[0].legs[0];
+    const directions = await axios.post('/api/directions', {cities});
+    const { steps } = directions.data;
     const filteredSteps = steps.filter(step => {
       return step.distance.value > 160000;
     });
@@ -108,8 +110,8 @@ class CreateTrip extends React.Component {
     }
 
     return (
-      <div>
-          <h2>Enter two cities to begin:</h2>
+      <div id="create">
+          <h2 id="prompt">Enter two cities to begin:</h2>
           <form
             onSubmit={e => {
               e.preventDefault();
