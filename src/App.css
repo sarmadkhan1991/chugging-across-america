@@ -89,7 +89,6 @@ button, .react-link {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  z-index: 4;
 }
 
 .weather-container {
