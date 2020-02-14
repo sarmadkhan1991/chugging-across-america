@@ -46,6 +46,11 @@ app.post('/api/directions', async (req, res, next) => {
   const directions = await axios.post(`https://maps.googleapis.com/maps/api/directions/json?origin=${cities[0].name}&destination=${cities[1].name}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`).catch(e => console.log(e));
   res.status(200).send(directions.data.routes[0].legs[0]);
 });
+app.post('/api/breweries', async (req, res, next) => {
+  const { step } = req.body;
+  const breweries = await axios.get(`https://sandbox-api.brewerydb.com/v2/search/geo/point?lat=${step.end_location.lat}&lng=${step.end_location.lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`);
+  res.status(200).send(breweries.data.data);
+});
 
 const path = require('path')
 app.get('*', (req, res)=>{

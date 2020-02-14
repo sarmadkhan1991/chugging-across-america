@@ -17,7 +17,8 @@ class CreateTrip extends React.Component {
       startCity: "",
       endCity: "",
       redirect: false,
-      steps: []
+      steps: [],
+      breweries: []
     }
   }
 
@@ -58,10 +59,11 @@ class CreateTrip extends React.Component {
     });
 
       this.state.steps.forEach(async (step, index) => {
-        await axios.get(`/v2/search/geo/point?lat=${step.end_location.lat}&lng=${step.end_location.lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
-          .then(res => {
-            if (res.data.data){
-              const breweries = res.data.data;
+        const res = await axios.post('/api/breweries', {step});
+        // await axios.get(`/v2/search/geo/point?lat=${step.end_location.lat}&lng=${step.end_location.lng}&key=${process.env.REACT_APP_BREWERIES_API_KEY}&radius=100`)
+        //   .then(res => {
+            if (res.data){
+              const breweries = res.data;
               const breweriesOpenToPublic = breweries.filter(brew => {
                 if (brew.openToPublic === 'Y') {
                   return brew
@@ -99,8 +101,8 @@ class CreateTrip extends React.Component {
                 redirect: true
               })
             }
-          })
-          .catch(e => console.log(e));
+        //   })
+        //   .catch(e => console.log(e));
       })  
   }
   
