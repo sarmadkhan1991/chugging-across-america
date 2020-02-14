@@ -46,7 +46,7 @@ class Weather extends React.Component {
 
     render() {
         const { report } = this.state;
-        const { city } = this.props;
+        // const { city } = this.props;
      
           let regex = /12:00:00/
           const mappedDays = report.filter(today => today.dt_txt.match(regex));
@@ -54,11 +54,11 @@ class Weather extends React.Component {
           const mappedReports = mappedDays.map((r, index) => {
             return (
                 <div key={index}>
-                    <div className="weather-container">
+                    <div className="daily-forecast">
                         {this.getDayOfWeek(r.dt_txt)}<br /><br />
                         {this.calcFahrenheit(r.main.temp)}&#8457;<br />
                         <img src={`https://openweathermap.org/img/wn/${r.weather[0].icon}.png`} alt="forecast" height="50px"/><br />
-                        {r.weather[0].description}
+                        {r.weather[0].description}<br /><br />
                     </div>
                     
                 </div>
@@ -68,12 +68,14 @@ class Weather extends React.Component {
       
        
         return (
-            <div>
-  
-                <div>{city.name}</div>
+            <div id="weather-container">
                 <hr />
-                <div>{mappedReports}</div>
-                
+                    <h1>
+                        5 Day Weather Forecast<br /><br />
+                    </h1>
+                <div className="mapped-weather-container">
+                    {mappedReports}
+                </div>
                 <hr className="clear-float" />
             </div>
         )

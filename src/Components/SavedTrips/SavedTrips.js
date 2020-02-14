@@ -67,31 +67,33 @@ class SavedTrips extends React.Component {
         const incompleteTrips = incomplete.map(trip => {
             return (
                 <div key={trip.id}>
-                    <div>{trip.starting_city}</div>
-                    <div>{trip.ending_city}</div>
+                    <div>Starting City: {trip.starting_city}</div>
+                    <div>Ending City: {trip.ending_city}</div>
                     Completed:<input onChange={() =>this.checkbox(trip.id)} type="checkbox" value={trip.completed}/>
+                    <hr />
                 </div>
             )
         });
         const completedTrips = complete.map(trip => {
             return (
                 <div key={trip.id}>
-                <div>{trip.starting_city}</div>
-                <div>{trip.ending_city}</div>
+                <div>Starting City: {trip.starting_city}</div>
+                <div>Ending City: {trip.ending_city}</div>
                 Completed: <input onChange={() => this.unCheckbox(trip.id)} type="checkbox" value={trip.completed} defaultChecked/>
+                <hr />
             </div>
             )
         })
 
         
         return(
-            <div>
-                <div>
-                    <h1>Current Trips:</h1>
+            <div className="saved-trips">
+                <div className="incomplete-trips">
+                    <h1>Current Trips</h1>
                     {incompleteTrips}
                 </div>
-                <div>
-                    <h1>Completed Trips:</h1>
+                <div className="completed-trips">
+                    <h1>Completed Trips</h1>
                     {completedTrips}
                 </div>
             </div>

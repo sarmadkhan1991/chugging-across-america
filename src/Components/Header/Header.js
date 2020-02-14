@@ -91,16 +91,20 @@ class Header extends Component {
                     </h1>
                     {user.username ?
                         (
-                            <div>
+                            <div className="login-container">
+                                <div className="cheers">
                                 Cheers, {user.username} 
                                 {/* <button onClick={this.logout}>
                                     Logout
                                 </button> */}
-                                <Nav logoutFn={this.logout} />
+                                </div>
+                                <div className="hamburger-icon-container">
+                                    <Nav logoutFn={this.logout} />
+                                </div>
                             </div>
                         ):
                         (
-                            <div className="login-container">
+                            <div className="auth-container">
                                 <div>
                                     <input className="username-input" type="text" placeholder="Enter username" value={username} onChange={e => this.handleUsernameInput(e.target.value)}></input>
                                 </div>
@@ -108,10 +112,10 @@ class Header extends Component {
                                     <input className="password-input"  type="password" placeholder="Enter password" value={password} onChange={e => this.handlePasswordInput(e.target.value)}></input>
                                 </div>
                                 <div>
-                                    <button className="login-button" onClick={this.login}>
+                                    <button className="auth-button" onClick={this.login}>
                                         Login
                                     </button>
-                                    <button onClick={this.register}>
+                                    <button className="auth-button" onClick={this.register}>
                                         Register
                                     </button>
                                 </div>

@@ -33,10 +33,12 @@ class Rating extends React.Component {
     }
     const mappedRatings = ratings.data.map((rating) => {
       return (
-        <div key={rating.id}>
-          <h1>{rating.username}</h1>
-          <h2>{rating.rating}</h2>
-          <p>{rating.review}</p>
+        <div className="rating-container" key={rating.id}>
+          <div>
+            <p>User: {rating.username}</p>
+            <p>Rating: {rating.rating}</p>
+            <p>Comments: {rating.review}</p>
+          </div>
         </div>
       );
     });
@@ -71,9 +73,9 @@ class Rating extends React.Component {
     const mappedRatings = ratings.data.map((rating) => {
       return (
         <div key={rating.id}>
-          <h1>{rating.username}</h1>
-          <h2>{rating.rating}</h2>
-          <p>{rating.review}</p>
+          <p>User: {rating.username}</p>
+          <p>Rating: {rating.rating}</p>
+          <p>Comments: {rating.review}</p>
         </div>
       );
     });
@@ -85,69 +87,80 @@ class Rating extends React.Component {
   render() {
     return (
       <div>
-        Ratings
+        <br />
+        <hr />
+        <br />
+        <h2 id="ratings-h2">
+          Ratings
+        </h2>
         {
           this.state.mappedRatings.length
           ?
           this.state.mappedRatings
           :
-          <h1>No ratings for this brewery.</h1>  
+          <div id="no-ratings">
+            There are currently no ratings for this brewery. Be the first to add one!
+          </div>
         }
         {
           !this.state.user
           ?
-          <div>
-            <h1>Login to add a rating.</h1>
+          <div  className="add-rating-container">
+            Login to add a rating.
           </div>
           :
-          <div>
-            <h1>Add a rating!</h1>
-            <button
-              onClick={this.addRatingToggle}
-            >
-              Add
-            </button>
-            <form
-              onSubmit={e => {
-                e.preventDefault();
-                this.addRating();
-              }}
-            >
-              <button
+          <div className="add-rating-container">
+            <div>
+              <h2>Add a rating!</h2>
+              {/* <button
                 onClick={this.addRatingToggle}
               >
-                Cancel
-              </button>
-              <h1>Rating:</h1>
-              <select
-                type='number'
-                required
-                name='rating'
-                value={this.state.rating}
-                onChange={e => this.changeHandler(e.target.name, e.target.value)}
+                Add
+              </button> */}
+              <form
+                onSubmit={e => {
+                  e.preventDefault();
+                  this.addRating();
+                }}
               >
-                <option value='1'>1</option>
-                <option value='2'>2</option>
-                <option value='3'>3</option>
-                <option value='4'>4</option>
-                <option value='5'>5</option>
-              </select>
-              <input
-                type='text'
-                required
-                name='review'
-                value={this.state.review}
-                onChange={e => this.changeHandler(e.target.name, e.target.value)}
-                placeholder='Enter a review.'
-              />
-              <button
-                type='submit'
-              >
-                Submit
-              </button>
-            </form>
+                {/* <button
+                  onClick={this.addRatingToggle}
+                >
+                  Cancel
+                </button> */}
+                <h1>Rating:</h1>
+                <select
+                  type='number'
+                  required
+                  name='rating'
+                  value={this.state.rating}
+                  onChange={e => this.changeHandler(e.target.name, e.target.value)}
+                >
+                  <option value='1'>1</option>
+                  <option value='2'>2</option>
+                  <option value='3'>3</option>
+                  <option value='4'>4</option>
+                  <option value='5'>5</option>
+                </select>
+                <input
+                  type='text'
+                  required
+                  name='review'
+                  value={this.state.review}
+                  onChange={e => this.changeHandler(e.target.name, e.target.value)}
+                  placeholder='Enter a review'
+                />
+                <button
+                  type='submit'
+                >
+                  Submit
+                </button>
+              </form>
+            </div>
           </div>
         }
+        <br />
+        <hr />
       </div>
     );
   }

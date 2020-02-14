@@ -13,9 +13,11 @@ function Trip(props) {
             return (
                 <div>
                     <Map/>
+                    <span className="trip">
                     <Weather/>
                     <BrewList />
                     <SaveTripButton/>
+                    </span>
                 </div>
             )
         } else {

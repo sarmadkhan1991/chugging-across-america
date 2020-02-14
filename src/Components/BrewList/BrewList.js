@@ -21,12 +21,16 @@ class BrewList extends React.Component {
 
       const mappedBreweries = filtered.map(brew => {
           return (
-              <div key={brew.locId}>
-                  <Link to='/brewery' >
-                      <div onClick={() => this.props.getBrewery(brew)}>{brew.name}</div>
+              <div className="breweries-container" key={brew.locId}>
+                <div>
+                  <Link className="brewery-name" to='/brewery' >
+                      <span onClick={() => this.props.getBrewery(brew)}>{brew.name}</span>
                   </Link>
-                  <div>{brew.address.streetAddress}, {brew.address.city}, {brew.address.state}, {brew.address.zip}</div>
-                  <div>hours of Operation: {}</div>
+                  <address>
+                    {brew.address.streetAddress}<br />
+                    {brew.address.city}, {brew.address.state} {brew.address.zip}
+                  </address>
+                </div>
               </div>
               )
           }
@@ -37,15 +41,20 @@ class BrewList extends React.Component {
       })
     } else {
       this.setState({
-        breweries: `No Breweries Found in ${this.props.cities[1].name}`
+        breweries: `There were no breweries found in ${this.props.cities[1].name}.`
       })
     }
 
   }
   render() {
     return (
-      <div>
-        {this.state.breweries}
+      <div id="weather-container">
+        <h1>
+          Brewery List<br />
+        </h1>
+        <div className="breweries-list">
+          {this.state.breweries}
+        </div>
       </div>
     )
   }

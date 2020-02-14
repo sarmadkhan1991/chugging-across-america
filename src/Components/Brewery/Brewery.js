@@ -40,30 +40,69 @@ class Breweries extends Component {
         const {beers} = this.state;
         const mappedBeers = beers.map(beer => {
             return (
-                <div key={beer.id}>
-                    <div>beer name: {beer.name}</div>
-                    {
-                        beer.style
-                        ?
-                        <div>beer type: {beer.style.category.name}</div>
-                        :
-                        <div>beer type: no listed type</div>
-                    }
-                    <div>ABV: {beer.abv}%</div>
-                </div>
+                // <div key={beer.id}>
+                //     <div>beer name: {beer.name}</div>
+                //     {
+                //         beer.style
+                //         ?
+                //         <div>beer type: {beer.style.category.name}</div>
+                //         :
+                //         <div>beer type: no listed type</div>
+                //     }
+                //     <div>ABV: {beer.abv}%</div>
+                // </div>
+                <tr key={beer.id}>
+                    <td>
+                        {beer.name}
+                    </td>
+                    <td>
+                        {beer.style.category.name}
+                    </td>
+                    <td>
+                        {beer.abv}%
+                    </td>
+                </tr>
             )
         })
         return (
-            <div className='brewery-component'>
-                <Link to='/trip'>
-                    <div>Back to trip</div>
-                </Link>
-                <h1>Breweryname:</h1>
-                    <div>{currentBrewery.name}</div>
-                    <div>address: {currentBrewery.address.streetAddress}, {currentBrewery.address.city}, {currentBrewery.address.state}, {currentBrewery.address.zip}</div>
-                    <Rating />
-                <h1>beer list:</h1>
-                {mappedBeers}
+            <div id='brewery-detail'>
+                <div>
+                    <br /><br />
+                    <Link to='/trip'>
+                        Back to Trip
+                    </Link>
+                    <br /><br />
+                </div>
+                <h1>
+                    {currentBrewery.name}
+                </h1>
+                <address>
+                    {currentBrewery.address.streetAddress}<br />
+                    {currentBrewery.address.city}, {currentBrewery.address.state} {currentBrewery.address.zip}
+                </address>
+                <Rating />
+                <br />
+                <h2>
+                    Beer List
+                </h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Type
+                        </th>
+                        <th>
+                            ABV
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {mappedBeers}
+                    </tbody>
+                </table>
             </div>
         )
     }
