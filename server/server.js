@@ -7,6 +7,7 @@ const tripCtrl = require('./controllers/tripController');
 const authCtrl = require('./controllers/authController');
 const ratingCtrl = require('./controllers/ratingController');
 const auth = require('./middleware/authMiddleware');
+const axios = require('axios');
 
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING } = process.env;
 massive(CONNECTION_STRING).then(db => {
@@ -39,6 +40,12 @@ app.delete('/user/trip/:id', tripCtrl.deleteTrip);
 
 app.get('/api/rating/:id', ratingCtrl.getRatings);
 app.post('/api/rating/:id', ratingCtrl.addRating);
+
+app.post('/api/directions', async (req, res, next) => {
+  const {cities} = req.body;
+  const directions = await axios.post(`https://maps.googleapis.com/maps/api/directions/json?origin=${cities[0].name}&destination=${cities[1].name}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`).catch(e => console.log(e));
+  res.status(200).send(directions.data.routes[0].legs[0]);
+});
 
 const path = require('path')
 app.get('*', (req, res)=>{
