@@ -113,7 +113,7 @@ class CreateTrip extends React.Component {
 
     return (
       <div id="create">
-          <h2 id="prompt">Enter two cities to begin:</h2>
+          <h2 id="prompt">Enter two cities to start chugging:</h2>
           <form
             onSubmit={e => {
               e.preventDefault();

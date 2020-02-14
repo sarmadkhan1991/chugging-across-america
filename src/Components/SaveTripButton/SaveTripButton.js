@@ -1,7 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import { connect } from "react-redux";
-
+import {Link} from 'react-router-dom';
 
 export class SaveTripButton extends React.Component {
     constructor(props){
@@ -23,8 +23,11 @@ addToTrips() {
 
     render() {
         return (
-            <div>
-                <button className='btn' onClick={this.addToTrips}>Save Trip</button>
+            <div className="save-button-container">
+                <Link to="/">
+                    <button className='save-button'>Cancel</button>
+                </Link>
+                <button className='save-button' onClick={this.addToTrips}>Save Trip</button>
             </div>
         )
     }

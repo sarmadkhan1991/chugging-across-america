@@ -9,11 +9,11 @@ header {
   font-weight: 600;
 }
 
-footer, .weather-container {
+footer, .weather-container, .reset-password-button-container, .save-button-container, .saved-trips > div > h1, #weather-container, #brewery-detail > address, #brewery-detail > h1, #brewery-detail > h2,  #ratings-h2, #no-ratings {
   text-align: center;
 }
 
-footer, .home {
+footer, .home, .login-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,14 +23,20 @@ header, footer {
   height: 15vh;
   width: 100%;
   box-sizing: border-box;
-  padding: 10px;
   background-color: #000;
   color: #fff;
 }
 
+header, footer, th, td, #no-ratings, .link-container, .rating-container, .add-rating-container {
+  padding: 10px;
+}
+
+header > h1 {
+  margin-left: 100px;
+}
+
 main {
   min-height: calc(100vh - 30vh);
-  /* width: 85vw; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,21 +45,51 @@ main {
 
 h1 {
   font-weight: 700px;
+  font-size: larger;
+}
+
+h2 {
+  font-weight: 600px;
   font-size: large;
 }
 
-input {
+input, select {
+  height: 20px;
   margin-right: 2px;
 }
 
 button {
+  height: 28px;
+  font-size: 9pt;
   background-color: #dea429;
   border-radius: 3px;
-  border-color: #fff;
+}
+
+button:hover {
+  background-color: #e0ab38;
 }
 
 button, .react-link {
   cursor: pointer;
+}
+
+table, th {
+  width: 75vw;
+  margin: 25px 0px 25px 0px;
+}
+
+th {
+  background-color: #e5dacd;
+  font-weight: 600;
+  line-height: normal;
+}
+
+th, td, .incomplete-trips, .completed-trips, .add-rating-container, .reset-password-container {
+  border: 1px solid #d4c1ab;
+}
+
+#brewery-detail > address, #brewery-detail > h1 {
+  line-height: 15pt;
 }
 
 .home {
@@ -71,9 +107,111 @@ button, .react-link {
   padding: 80px;
 }
 
-.link-container {
-  padding: 10px;
+.auth-container, .mapped-weather-container, .add-rating-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.auth-button {
+  width: 60px;
+}
+
+.reset-password-container {
+  padding: 80px;
+}
+
+.reset-password-container > div > input {
+  width: 200px;
+  margin: 0px 0px 10px 0px;
+}
+
+.daily-forecast {
+  float: left;
+  font-weight: 600;
+  font-size: 9pt;
+  padding: 2px;
+}
+
+.rating-container {
+  margin: 15px 0px 0px 50px;
+}
+
+.add-rating-container {
+  width: 32.5vw;
+  margin: auto;
+}
+
+.incomplete-trips, .completed-trips {
+  padding-right: 50px;
+  padding-left: 50px;
+  margin: 25px;
+}
+
+.saved-trips {
+  min-height: calc(100vh - 30vh);
+  display: flex;
+  /* align-items: baseline; */
+  margin-top: 25px;
+}
+
+.save-button {
+  height: 55px;
+  width: 200px;
+  color: #fff;
+  font-size: 18pt;
+  font-weight: 700;
+  margin: 25px;
+}
+
+.success-msg {
+  color: green;
+  line-height: 36pt;
+}
+
+.breweries-container {
+  margin-top: 10px;
+}
+
+.breweries-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.brewery-name {
+  font-size: large;
+  /* text-decoration: none; */
+}
+
+.brewery-name:hover {
+  color: #dea429;
+}
+
+.city-name {
+  font-weight: 700px;
+  font-size: large;
+}
+
+.clear-float {
+  clear: both;
+}
+
+.link-container, .incomplete-trips, .completed-trips {
   line-height: 25pt;
+}
+
+.login-container {
+  width: 26%;
+}
+
+.cheers, .hamburger-icon-container {
+  float: left;
+}
+
+.hamburger-icon-container {
+  padding-left: 25px;
 }
 
 .react-link {
@@ -85,37 +223,7 @@ button, .react-link {
   color: #5b5b5b;
 }
 
-.login-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-.weather-container {
-  width: 75px;
-  float: left;
-  font-size: 9pt;
-  padding: 2px;
-}
-
-.saved-trips {
-  min-height: calc(100vh - 40vh);
-  display: flex;
-  align-items: baseline;
-}
-
-.success-msg {
-  color: green;
-  line-height: 36pt;
-}
-
-
-.clear-float {
-  clear: both;
-}
-
 .hamburger-icon {
-  /* display: none; */
   color: #fff;
 }
 
@@ -129,12 +237,15 @@ button, .react-link {
   opacity: 75%;
   color: #fff;
   display: none;
+  padding: 10px;
+  z-index: 2;
 }
 
 .hamburger-menu-open {
   display: block;
   animation: open 1s forwards;
   position: absolute;
+  
 }
 
 .hamburger-menu-close {
@@ -145,13 +256,15 @@ button, .react-link {
 
 @keyframes open {
   0% {
-      transform: translateY(-150vh);
+      /* transform: translateY(-100vh); */
+      transform: translateX(100vw);
   }
 }
 
 @keyframes close {
   100% {
-      transform: translateY(-100vh);
+      /* transform: translateY(-100vh); */
+      transform: translateX(100vw);
   }
 }
 

@@ -22,10 +22,10 @@ class Nav extends Component {
     }
     render() {
         return (
-            <div>
+            <div className="link-container">
                 <GiHamburgerMenu className="hamburger-icon" size={36} onClick={this.toggleMenu} />
                 <menu className={this.state.menuStatus} onClick={this.toggleMenu}>
-                    <div className="link-container">
+                    <div>
                         <div>
                             <Link to="/" className="react-link">
                                 Create A Trip

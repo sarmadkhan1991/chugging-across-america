@@ -11,21 +11,26 @@ export default class ResetPassword extends Component {
             msg: ""
         }
         this.changeHandler = this.changeHandler.bind(this);
+        this.cancel = this.cancel.bind(this);
         this.updatePassword = this.updatePassword.bind(this);
     }
     changeHandler(key, value) {
-        this.setState({
+        this.setState( {
             [key]: value
         });
+    }
+    cancel() {
+        this.setState( {
+            oldPassword: "",
+            newPassword: "",
+            confirmPassword: ""
+        })
     }
     async updatePassword() {
         const { oldPassword, newPassword, confirmPassword } = this.state;
         let pwdVerified = false;
         
         if(newPassword === "" || confirmPassword === "") {
-            // this.setState( {
-            //     msg: "All fields are required."
-            // })
             alert("All fields are required.")
             return
         } else if(newPassword !== confirmPassword) {
@@ -35,6 +40,9 @@ export default class ResetPassword extends Component {
         await axios.put("/api/auth/verifyPassword", {oldPassword})
         .then(() => {
             pwdVerified = true;
+        })
+        .catch(() => {
+            pwdVerified = false;
         })
         if(pwdVerified !== true) {
             alert("Old password not correct.")
@@ -52,13 +60,13 @@ export default class ResetPassword extends Component {
     }
     render() {
         const { msg } = this.state;
-
         return (
             <div>
-                <div>
+                <div className="reset-password-container">
                     <h1>
                         Reset Password
                     </h1>
+                    <br /><br />
                     <div>
                         <span className="success-msg">
                             {msg}
@@ -82,11 +90,11 @@ export default class ResetPassword extends Component {
                     <div>
                         <input type="password" name="confirmPassword" onChange={event => this.changeHandler(event.target.name, event.target.value)} value={this.state.confirmPassword} />
                     </div>
-                    <div>
-                        <button>
+                    <div className="reset-password-button-container">
+                        <button className="authButton" onClick={this.cancel}>
                             Cancel
                         </button>
-                        <button onClick={this.updatePassword}>
+                        <button className="authButton" onClick={this.updatePassword}>
                             Reset
                         </button>
                     </div>
