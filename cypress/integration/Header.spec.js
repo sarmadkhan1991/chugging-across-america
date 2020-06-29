@@ -18,7 +18,7 @@ describe('Header', () => {
     })
 
     it('clicks Login', () => {
-        cy.get('.login-button')
+        cy.get('.auth-button')
         .click()
     })
 })
