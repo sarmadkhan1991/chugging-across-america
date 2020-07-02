@@ -8,12 +8,12 @@ module.exports = function (app) {
         })
     );
 
-    app.use(
-        proxy("/maps", {
-            target:"https://maps.googleapis.com",
-            changeOrigin: true
-        })
-    );
+    // app.use(
+    //     proxy("/maps/", {
+    //         target:"https://maps.googleapis.com",
+    //         changeOrigin: true
+    //     })
+    // );
 
     app.use(
         proxy("/api", {

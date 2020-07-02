@@ -24,15 +24,16 @@ class CreateTrip extends React.Component {
 
   // Define change handler for inputs.
   changeHandler = (key, value) => {
-    this.setState({
+    this.setState({ 
       [key]: value
     });
   }
   
   submitHandler = async () => {
     let cities = [];
-    const startCity = await axios.get(`/maps/api/geocode/json?address=${this.state.startCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`);
-    const endCity = await axios.get(`/maps/api/geocode/json?address=${this.state.endCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`);
+    const startCity = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.startCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`);
+    const endCity = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.endCity}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`);
+    console.log(startCity, endCity);
     cities.push({
       name: startCity.data.results[0].address_components[0].long_name,
       lat: startCity.data.results[0].geometry.location.lat,
